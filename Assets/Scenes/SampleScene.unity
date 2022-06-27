@@ -1158,15 +1158,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7194123131100743769, guid: 11e3cb620791bb142b2a88cec87aa57b, type: 3}
       propertyPath: m_XDamping
-      value: 3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7194123131100743769, guid: 11e3cb620791bb142b2a88cec87aa57b, type: 3}
       propertyPath: m_YDamping
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7194123131100743769, guid: 11e3cb620791bb142b2a88cec87aa57b, type: 3}
       propertyPath: m_ZDamping
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7194123131100743769, guid: 11e3cb620791bb142b2a88cec87aa57b, type: 3}
       propertyPath: m_FollowOffset.y

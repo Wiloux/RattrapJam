@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
 	public float strengthMax;
 	public float strengthMin;
 
+	public GameObject eye;
+	public GameObject eyeTarget;
+	
 
 	private void Start()
 	{
@@ -53,6 +56,15 @@ public class PlayerController : MonoBehaviour
 		float moveX = Input.GetAxisRaw("Horizontal");
 		float moveZ = Input.GetAxisRaw("Vertical");
 		moveDirection = new Vector2(moveX, moveZ);
+
+		//eye.transform.localRotation = Quaternion.RotateTowards(
+		//eye.transform.localRotation,
+		//Quaternion.LookRotation(new Vector3(-moveDirection.y, 0, moveDirection.x), Vector3.left),
+		//Time.deltaTime * 250) ;
+		//eyeTarget.transform.localPosition = new Vector3(moveDirection.x, 1, moveDirection.y) * 1.3f;
+
+		eye.transform.localEulerAngles = new Vector4(0, -moveDirection.y, moveDirection.x, moveDirection.y) * 30;
+
 	}
 
 	void FixedUpdate()
@@ -62,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Move()
 	{
-		rb.velocity = new Vector3(moveDirection.x, 0, moveDirection.y).normalized * moveSpeed;
+		rb.velocity = new Vector2(moveDirection.x, moveDirection.y).normalized * moveSpeed;
 	}
 
 	public float t;
@@ -80,12 +92,17 @@ public class PlayerController : MonoBehaviour
 			//targetScale = new Vector3(initialScale.x + size / 10, initialScale.y, initialScale.z + size / 10);
 			other.GetComponentInChildren<Animator>().SetTrigger("Death");
 			killedEnemy.dead = true;
-			killedEnemy.target = transform;
 			Destroy(other.gameObject, 2);
 		}
 		else if(!other.GetComponent<Enemy>().dead)
 		{
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawRay(transform.position, new Vector2(moveDirection.x,moveDirection.y) * 10);
 	}
 }

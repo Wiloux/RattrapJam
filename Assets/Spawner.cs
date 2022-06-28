@@ -54,7 +54,6 @@ public class Spawner : MonoBehaviour
 		currentUnits++;
 
 		Vector3 final = player.transform.position + new Vector3(Random.Range(-size.x / 2, size.x / 2),
-			0,
 			Random.Range(-size.y / 2, size.y / 2));
 
 
@@ -75,7 +74,6 @@ public class Spawner : MonoBehaviour
 		while ((hitColliders.Length != 0 || Vector3.Distance(player.transform.position, final) < miniDistanceFromPlayer)  && maxAttempt != 50)
 		{
 			final = player.transform.position + new Vector3(Random.Range(-size.x / 2, size.x / 2),
-				0,
 				Random.Range(-size.y / 2, size.y / 2));
 			hitColliders = Physics.OverlapSphere(final, scale.x* 4);
 			maxAttempt++;
@@ -95,7 +93,7 @@ public class Spawner : MonoBehaviour
 
 	private void OnDrawGizmos()
 	{
-		Gizmos.DrawWireCube(player.transform.position, new Vector3(size.x, 0, size.y));
+		Gizmos.DrawWireCube(player.transform.position, new Vector3(size.x, size.y));
 		Gizmos.color = Color.blue;
 		Gizmos.DrawWireSphere(player.transform.position, miniDistanceFromPlayer);
 

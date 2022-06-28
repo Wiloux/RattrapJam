@@ -14,11 +14,11 @@ public class Enemy : MonoBehaviour
     public float strength;
     public float rotationSpd;
     public bool dead;
-    public Transform target;
     public List<GameObject> skins = new List<GameObject>();
 
     public AnimationCurve deathCurve;
 
+    public GravitationnalPull gPull;
 
 
     void Start()
@@ -39,6 +39,8 @@ public class Enemy : MonoBehaviour
         {
             skins[3].SetActive(true);
         };
+
+        gPull = GetComponent<GravitationnalPull>();
     }
 
 
@@ -54,9 +56,8 @@ public class Enemy : MonoBehaviour
             step +=  0.05f * Time.deltaTime;
 
             transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, deathCurve.Evaluate(step));
-            transform.position = Vector3.Lerp(transform.position, target.position, deathCurve.Evaluate(step));
+          //  transform.position = Vector3.Lerp(transform.position, gPull.pullingObject.position, deathCurve.Evaluate(step));
 		}
-
 
     }
 

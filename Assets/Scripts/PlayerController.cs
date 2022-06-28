@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,9 +23,12 @@ public class PlayerController : MonoBehaviour
 	public float strengthMax;
 	public float strengthMin;
 
-	public GameObject eye;
-	public GameObject eyeTarget;
-	
+	public CinemachineVirtualCamera myCam;
+	private int lastThreshold;
+	[SerializeField] private float targetFov;
+	[SerializeField] private float fovUpValue;
+	[SerializeField] private float cameraDezoomTime;
+	private float timeElapsed = 0;
 
 	private void Start()
 	{
@@ -33,7 +37,9 @@ public class PlayerController : MonoBehaviour
 
 		t = ((strength - 1) / (strengthMax));
 		targetScale = Vector3.Lerp(minSize, maxSize, t);
+		targetFov = myCam.m_Lens.OrthographicSize;
 		//targetScale = initialScale;
+		lastThreshold = (int)strength;
 	}
 
 	float lerpScale;
@@ -50,21 +56,22 @@ public class PlayerController : MonoBehaviour
 		{
 			lerpScale = 0;
 		}
+
+		if(myCam.m_Lens.OrthographicSize != targetFov)
+        {
+			if (timeElapsed < cameraDezoomTime)
+			{
+				myCam.m_Lens.OrthographicSize = Mathf.Lerp(myCam.m_Lens.OrthographicSize, targetFov, timeElapsed / cameraDezoomTime);
+				timeElapsed += Time.deltaTime;
+			}
+		}
+
 	}
 	void ProcessInputs()
 	{
 		float moveX = Input.GetAxisRaw("Horizontal");
 		float moveZ = Input.GetAxisRaw("Vertical");
 		moveDirection = new Vector2(moveX, moveZ);
-
-		//eye.transform.localRotation = Quaternion.RotateTowards(
-		//eye.transform.localRotation,
-		//Quaternion.LookRotation(new Vector3(-moveDirection.y, 0, moveDirection.x), Vector3.left),
-		//Time.deltaTime * 250) ;
-		//eyeTarget.transform.localPosition = new Vector3(moveDirection.x, 1, moveDirection.y) * 1.3f;
-
-		eye.transform.localEulerAngles = new Vector4(0, -moveDirection.y, moveDirection.x, moveDirection.y) * 30;
-
 	}
 
 	void FixedUpdate()
@@ -74,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Move()
 	{
-		rb.velocity = new Vector2(moveDirection.x, moveDirection.y).normalized * moveSpeed;
+		rb.velocity = new Vector3(moveDirection.x, 0, moveDirection.y).normalized * moveSpeed;
 	}
 
 	public float t;
@@ -87,22 +94,22 @@ public class PlayerController : MonoBehaviour
 
 			strength += killedEnemy.strength /10;
 			t = ((strength - 1) / (strengthMax));
-		
+			if((int)strength > lastThreshold){
+				timeElapsed = 0;
+				Debug.Log("Dezoom camera");
+				targetFov += fovUpValue;
+				lastThreshold = (int)strength;
+            }
 			targetScale = Vector3.Lerp(minSize, maxSize, t);
 			//targetScale = new Vector3(initialScale.x + size / 10, initialScale.y, initialScale.z + size / 10);
 			other.GetComponentInChildren<Animator>().SetTrigger("Death");
 			killedEnemy.dead = true;
+			killedEnemy.target = transform;
 			Destroy(other.gameObject, 2);
 		}
 		else if(!other.GetComponent<Enemy>().dead)
 		{
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
-	}
-
-	private void OnDrawGizmos()
-	{
-		Gizmos.color = Color.yellow;
-		Gizmos.DrawRay(transform.position, new Vector2(moveDirection.x,moveDirection.y) * 10);
 	}
 }

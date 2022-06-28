@@ -24,6 +24,7 @@ public class GravitationnalPull : MonoBehaviour
 		distanceToPlayer = Vector3.Distance(pulledTarget.position, pullingObject.position);
 		if (distanceToPlayer < influenceRange)
 		{
+			pulledTarget.RotateAround(pullingObject.position, Vector3.up, 20 * Time.deltaTime);
 			pullForce = (pullingObject.position - pulledTarget.position).normalized / distanceToPlayer * intensity;
 			targetBody.AddForce(pullForce);
 		}

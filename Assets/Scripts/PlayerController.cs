@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
 			//targetScale = new Vector3(initialScale.x + size / 10, initialScale.y, initialScale.z + size / 10);
 			other.GetComponentInChildren<Animator>().SetTrigger("Death");
 			killedEnemy.dead = true;
-			killedEnemy.target = transform;
+			//killedEnemy.target = transform;
 			Destroy(other.gameObject, 2);
 		}
 		else if(!other.GetComponent<Enemy>().dead)

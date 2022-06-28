@@ -110,12 +110,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cbcf8f7ba939fe4e8edfb97bbe63cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDebris: 0
+  Debris: {fileID: 5979114956366609892, guid: 785cc56e5b516c145844334d495e5f42, type: 3}
   pulledTarget: {fileID: 0}
   pullingObject: {fileID: 0}
   player: {fileID: 0}
   influenceRange: 10
   intensity: 15
-  playerStrengthPercentage: 0.05
+  playerStrengthPercentage: 0.1
   currentMat: {fileID: 0}
   rot: {fileID: 8475706270175460655}
 --- !u!54 &7979614318137856640

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GravitationnalPull : MonoBehaviour
 {
+
+	public bool isDebris;
+	public GameObject Debris;
 	[SerializeField] private Transform pulledTarget;
 	[SerializeField] public Transform pullingObject;
 	[SerializeField] public PlayerController player;
@@ -19,6 +22,7 @@ public class GravitationnalPull : MonoBehaviour
 	public GameObject rot;
 
 	private Enemy myEnemy;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -29,8 +33,11 @@ public class GravitationnalPull : MonoBehaviour
 		pullingObject = player.transform;
 		initialScale = transform.localScale;
 
-		currentMat = rot.GetComponentInChildren<MeshRenderer>().material;
-		currentMat.SetFloat("Health", myEnemy.strength / myEnemy.strength);
+		if (!isDebris && rot != null)
+		{
+			currentMat = rot.GetComponentInChildren<MeshRenderer>().material;
+			currentMat.SetFloat("Health", myEnemy.strength / myEnemy.strength);
+		}
 	}
 
 	private float t = 0;
@@ -41,7 +48,7 @@ public class GravitationnalPull : MonoBehaviour
 
 		if (myEnemy.strength <= 0 && !myEnemy.dead)
 		{
-			StartCoroutine(Death());
+			StartCoroutine(Death(true));
 		}
 
 
@@ -51,7 +58,8 @@ public class GravitationnalPull : MonoBehaviour
 			pullForce = (pullingObject.position - pulledTarget.position).normalized / distanceToPlayer * intensity;
 			targetBody.AddForce(pullForce);
 
-			currentMat.SetFloat("Health", myEnemy.strength / myEnemy.strengthMax);
+			if (!isDebris && currentMat != null)
+				currentMat.SetFloat("Health", myEnemy.strength / myEnemy.strengthMax);
 
 
 			if (transform.localScale.magnitude > player.transform.localScale.magnitude) //If Im bigger than the player
@@ -73,7 +81,7 @@ public class GravitationnalPull : MonoBehaviour
 		}
 		else if (distanceToPlayer > influenceRange + influenceRange / 2)
 		{
-			targetBody.velocity = Vector3.zero;
+			//targetBody.velocity = Vector3.zero;
 		}
 	}
 
@@ -82,9 +90,9 @@ public class GravitationnalPull : MonoBehaviour
 	IEnumerator Death(bool spawnDebris = false)
 	{
 		myEnemy.dead = true;
-		Vector3 initscale = transform.localScale;
+		Vector3 initscale = transform.lossyScale;
 		float elapsedTime = 0;
-		float waitTime = 2f;
+		float waitTime = 0.8f;
 		if (spawnDebris)
 			waitTime /= 1.5f;
 
@@ -96,9 +104,27 @@ public class GravitationnalPull : MonoBehaviour
 			// Yield here
 			yield return null;
 		}
-		if(!spawnDebris)
-		player.UpdateScaleAndStrength(myEnemy);
+		if (!spawnDebris)
+			player.UpdateScaleAndStrength(myEnemy);
+		else
+		{
+			List<Enemy> debris = new List<Enemy>();
+			int debrisAmount = Random.Range(0, 5);
+			for (int i = 0; i < debrisAmount; i++)
+			{
+				Enemy newenemy = Instantiate(Debris, transform.position, Quaternion.identity).GetComponent<Enemy>();
+				debris.Add(newenemy);
+			}
 
+			float debrisStrength = myEnemy.strength / debrisAmount;
+			for (int i = 0; i < debrisAmount; i++)
+			{
+				debris[i].strength = debrisStrength;
+				debris[i].transform.localScale = initscale;
+			}
+
+	
+		}
 
 		Destroy(gameObject);
 	}

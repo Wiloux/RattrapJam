@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private float cameraDezoomTime;
 	private float timeElapsed = 0;
 
+	public GameObject eye;
+
 	private void Start()
 	{
 		rb = GetComponent<Rigidbody>();
@@ -71,7 +73,11 @@ public class PlayerController : MonoBehaviour
 	{
 		float moveX = Input.GetAxisRaw("Horizontal");
 		float moveZ = Input.GetAxisRaw("Vertical");
+
 		moveDirection = new Vector2(moveX, moveZ);
+
+		eye.transform.localEulerAngles = new Vector4(0, -moveDirection.y, moveDirection.x, moveDirection.y) * 30;
+
 	}
 
 	void FixedUpdate()
@@ -81,33 +87,38 @@ public class PlayerController : MonoBehaviour
 
 	private void Move()
 	{
-		rb.velocity = new Vector3(moveDirection.x, 0, moveDirection.y).normalized * moveSpeed;
+		rb.velocity = new Vector3(moveDirection.x, moveDirection.y,0).normalized * moveSpeed;
 	}
 
 	public float t;
+
+	public void UpdateScaleAndStrength(Enemy killedEnemy)
+	{
+		strength += killedEnemy.strength / 10;
+		t = ((strength - 1) / (strengthMax));
+		targetScale = Vector3.Lerp(minSize, maxSize, t);
+		killedEnemy.dead = true;
+	}
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.CompareTag("Consumable") && !other.GetComponent<Enemy>().dead && other.GetComponent<Enemy>().strength <= strength)
+		if (other.CompareTag("Consumable") && transform.localScale.magnitude > other.transform.localScale.magnitude)
 		{
-			Enemy killedEnemy = other.GetComponent<Enemy>();
 
 
-			strength += killedEnemy.strength /10;
-			t = ((strength - 1) / (strengthMax));
+			//Camera
+
 			if((int)strength > lastThreshold){
 				timeElapsed = 0;
 				Debug.Log("Dezoom camera");
 				targetFov += fovUpValue;
 				lastThreshold = (int)strength;
             }
-			targetScale = Vector3.Lerp(minSize, maxSize, t);
+
+			
 			//targetScale = new Vector3(initialScale.x + size / 10, initialScale.y, initialScale.z + size / 10);
 			other.GetComponentInChildren<Animator>().SetTrigger("Death");
-			killedEnemy.dead = true;
-			//killedEnemy.target = transform;
-			Destroy(other.gameObject, 2);
 		}
-		else if(!other.GetComponent<Enemy>().dead)
+		else if(transform.localScale.magnitude < other.transform.localScale.magnitude)
 		{
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}

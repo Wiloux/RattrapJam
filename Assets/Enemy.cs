@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     private Vector3 pullForce;
     private float distanceToPlayer;
     public float strength;
+    public float strengthMax;
     public float rotationSpd;
     public bool dead;
     public List<GameObject> skins = new List<GameObject>();
@@ -19,6 +20,7 @@ public class Enemy : MonoBehaviour
     public AnimationCurve deathCurve;
 
     public GravitationnalPull gPull;
+    public bool isDead;
 
 
     void Start()
@@ -40,6 +42,7 @@ public class Enemy : MonoBehaviour
             skins[3].SetActive(true);
         };
 
+        strengthMax = strength;
         gPull = GetComponent<GravitationnalPull>();
     }
 

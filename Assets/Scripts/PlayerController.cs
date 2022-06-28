@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
 	public void UpdateScaleAndStrength(Enemy killedEnemy)
 	{
-		strength += killedEnemy.strength / 10;
+		strength += killedEnemy.strengthMax / 10;
 		t = ((strength - 1) / (strengthMax));
 		targetScale = Vector3.Lerp(minSize, maxSize, t);
 		killedEnemy.dead = true;
@@ -103,8 +103,6 @@ public class PlayerController : MonoBehaviour
 	{
 		if (other.CompareTag("Consumable") && transform.localScale.magnitude > other.transform.localScale.magnitude)
 		{
-
-
 			//Camera
 
 			if((int)strength > lastThreshold){
@@ -114,7 +112,6 @@ public class PlayerController : MonoBehaviour
 				lastThreshold = (int)strength;
             }
 
-			
 			//targetScale = new Vector3(initialScale.x + size / 10, initialScale.y, initialScale.z + size / 10);
 			other.GetComponentInChildren<Animator>().SetTrigger("Death");
 		}

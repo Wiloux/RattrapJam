@@ -8,23 +8,31 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Earth 3
-  m_Shader: {fileID: 4800000, guid: 6e4ae4064600d784cac1e41a9e6f2e59, type: 3}
-  m_ShaderKeywords: _DISABLE_SSR_TRANSPARENT _EMISSIVE_COLOR_MAP _NORMALMAP_TANGENT_SPACE
+  m_Shader: {fileID: -6465566751694194690, guid: 5adcf74470a14794ca9831d18d2563d6, type: 3}
+  m_ShaderKeywords: _DISABLE_SSR_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2225
-  stringTagMap: {}
+  stringTagMap:
+    MotionVector: User
   disabledShaderPasses:
-  - DistortionVectors
+  - RayTracingPrepass
   - MOTIONVECTORS
   - TransparentDepthPrepass
   - TransparentDepthPostpass
   - TransparentBackface
-  - RayTracingPrepass
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_84acf30574994a2493c197dea3f052d4:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_c336964db9774494888a617fb6945e9e:
+        m_Texture: {fileID: 2800000, guid: 3ad058069f82d0e428b8e11ad16ea6a3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -85,6 +93,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_0fce7f5da8d8473aac90eb09789052b6_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 79e773e9f4171ce49889d42c63669596, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_3f732e176e494a4585dc5896d12efd30_Texture_1:
+        m_Texture: {fileID: 2800000, guid: b8443da87a3aefe439c0adfa392dcc1f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_6e5ad3af07084e26be7183eba7756047_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 22d1ff73456ddeb40871e8865a1ba53c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_73541f1e7d464e13bc657d06c3357583_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 79e773e9f4171ce49889d42c63669596, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecularColorMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -126,6 +150,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_dcfbdd5b2c274460b92928d0831b5594: 1.96
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -212,6 +237,8 @@ Material:
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
+    - _RenderQueueType: 1
+    - _RequireSplitLighting: 0
     - _Smoothness: 0
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
@@ -254,6 +281,7 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
+    - Color_4c18e61b8f484de19d977ecc331e55c1: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

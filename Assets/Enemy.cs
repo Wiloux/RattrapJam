@@ -51,13 +51,6 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    if (dead)
-        {
-            step +=  0.05f * Time.deltaTime;
-
-            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, deathCurve.Evaluate(step));
-          //  transform.position = Vector3.Lerp(transform.position, gPull.pullingObject.position, deathCurve.Evaluate(step));
-		}
 
     }
 

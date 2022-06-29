@@ -6,7 +6,7 @@ public class Spawner : MonoBehaviour
 {
 	// Start is called before the first frame update
 	public const int MAXUNIT = 500;
-	private int currentUnits;
+	public int currentUnits;
 
 	public Vector2 size;
 	public float miniDistanceFromPlayer;
@@ -72,11 +72,11 @@ public class Spawner : MonoBehaviour
 		Collider[] hitColliders = Physics.OverlapSphere(final, scale.x * 4);
 		int maxAttempt = 0;
 
-		while ((hitColliders.Length != 0 || Vector3.Distance(player.transform.position, final) < (miniDistanceFromPlayer * playerScript.transform.lossyScale.magnitude))  && maxAttempt != 50)
+		while ((hitColliders.Length != 0 || Vector3.Distance(player.transform.position, final) < (miniDistanceFromPlayer * playerScript.transform.lossyScale.magnitude)) && maxAttempt != 50)
 		{
 			final = player.transform.position + new Vector3(Random.Range(-size.x / 2, size.x / 2),
 				Random.Range(-size.y / 2, size.y / 2));
-			hitColliders = Physics.OverlapSphere(final, scale.x* 4);
+			hitColliders = Physics.OverlapSphere(final, scale.x * 4);
 			maxAttempt++;
 		}
 
@@ -94,10 +94,13 @@ public class Spawner : MonoBehaviour
 
 	private void OnDrawGizmos()
 	{
-		Gizmos.DrawWireCube(player.transform.position, new Vector3(size.x, size.y) * playerScript.transform.lossyScale.magnitude);
-		Gizmos.color = Color.blue;
-		Gizmos.DrawWireSphere(player.transform.position , miniDistanceFromPlayer * playerScript.transform.lossyScale.magnitude);
+		if (playerScript != null && player != null)
+		{
 
-		
+			Gizmos.DrawWireCube(player.transform.position, new Vector3(size.x, size.y) * playerScript.transform.lossyScale.magnitude);
+			Gizmos.color = Color.blue;
+			Gizmos.DrawWireSphere(player.transform.position, miniDistanceFromPlayer * playerScript.transform.lossyScale.magnitude);
+
+		}
 	}
 }

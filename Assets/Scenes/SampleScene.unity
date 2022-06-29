@@ -1079,8 +1079,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 562702906}
     - target: {fileID: 5900576998218042142, guid: 4195a9946c32e1847913d499496c5594, type: 3}
-      propertyPath: strengthMax
-      value: 10
+      propertyPath: cameraFovMaxMin.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5900576998218042142, guid: 4195a9946c32e1847913d499496c5594, type: 3}
+      propertyPath: cameraFovMaxMin.y
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5900576998218042143, guid: 4195a9946c32e1847913d499496c5594, type: 3}
       propertyPath: m_Constraints
@@ -1601,15 +1605,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentUnits: 0
-  size: {x: 400, y: 400}
+  size: {x: 300, y: 300}
   miniDistanceFromPlayer: 99.1
   player: {fileID: 1005952250}
   playerScript: {fileID: 1005952253}
   playerStrength: 1
-  strengthMax: 5
+  strengthMax: 7
   enemy: {fileID: 3551570500097470654, guid: 104c9e741976f134a98fe35fd2074533, type: 3}
   timerDur: 0.02
-  maxSize: {x: 5, y: 5, z: 5}
+  maxSize: {x: 7, y: 7, z: 7}
   minSize: {x: 0.1, y: 0.1, z: 0.1}
   t: 0
 --- !u!4 &1576948036

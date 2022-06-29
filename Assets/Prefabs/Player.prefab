@@ -228,21 +228,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 45
+  moveSpeedMaxMin: {x: 9, y: 55}
   growSpeed: 0.05
   strength: 1
   rb: {fileID: 0}
-  maxSize: {x: 5, y: 5, z: 5}
+  maxSize: {x: 6, y: 6, z: 6}
   minSize: {x: 0.1, y: 0.1, z: 0.1}
-  strengthMax: 5
+  strengthMax: 7
   strengthMin: 0
   myCam: {fileID: 0}
   miniMapCam: {fileID: 0}
   targetFov: 0
-  fovUpValue: 2
   cameraDezoomTime: 10
+  cameraFovMaxMin: {x: 5, y: 65}
   eye: {fileID: 5566995158675154709}
   deathScreen: {fileID: 0}
   t: 0
+  maxDiff: 1
 --- !u!135 &6146796578191967068
 SphereCollider:
   m_ObjectHideFlags: 0

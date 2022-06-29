@@ -51,12 +51,9 @@ public class Spawner : MonoBehaviour
 		if (MAXUNIT <= currentUnits)
 			return;
 
-		currentUnits++;
 
-		Vector3 final = player.transform.position + new Vector3(Random.Range(-size.x / 2, size.x / 2),
-			Random.Range(-size.y / 2, size.y / 2));
-
-		final *= playerScript.transform.localScale.magnitude;
+		Vector3 final = player.transform.position + (new Vector3(Random.Range(-size.x / 2, size.x / 2),
+			Random.Range(-size.y / 2, size.y / 2))* playerScript.transform.localScale.magnitude);
 
 		float randomRange = Random.Range(currentPlayerStrength - 1.5f, currentPlayerStrength + 1.5f);
 
@@ -72,10 +69,11 @@ public class Spawner : MonoBehaviour
 		Collider[] hitColliders = Physics.OverlapSphere(final, scale.x * 4);
 		int maxAttempt = 0;
 
-		while ((hitColliders.Length != 0 || Vector3.Distance(player.transform.position, final) < (miniDistanceFromPlayer * playerScript.transform.localScale.magnitude)) && maxAttempt != 50)
+		while ((hitColliders.Length != 0 || Vector3.Distance(player.transform.position, final) < (miniDistanceFromPlayer * playerScript.transform.lossyScale.magnitude)) && maxAttempt != 50)
 		{
-			final = player.transform.position + new Vector3(Random.Range(-size.x / 2, size.x / 2),
-				Random.Range(-size.y / 2, size.y / 2));
+			final = player.transform.position + (new Vector3(Random.Range(-size.x / 2, size.x / 2),
+			Random.Range(-size.y / 2, size.y / 2)) * playerScript.transform.localScale.magnitude);
+
 			hitColliders = Physics.OverlapSphere(final, scale.x * 4);
 			maxAttempt++;
 		}
@@ -88,6 +86,7 @@ public class Spawner : MonoBehaviour
 
 		GameObject newEnemy = Instantiate(enemy, final, Quaternion.identity);
 
+		currentUnits++;
 		newEnemy.transform.localScale = scale;
 		newEnemy.GetComponent<Enemy>().strength = randomRange;
 	}
@@ -101,6 +100,7 @@ public class Spawner : MonoBehaviour
 			Gizmos.DrawWireCube(player.transform.position, new Vector3(size.x, size.y) * playerScript.transform.localScale.magnitude);
 			Gizmos.color = Color.blue;
 			Gizmos.DrawWireSphere(player.transform.position, miniDistanceFromPlayer * playerScript.transform.localScale.magnitude);
+
 
 		}
 	}

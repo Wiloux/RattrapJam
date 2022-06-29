@@ -37,10 +37,22 @@ public class Enemy : MonoBehaviour
         {
             skins[2].SetActive(true);
         }
-        else if(strength > 3)
+        else if(strength > 3 && strength <= 4)
         {
             skins[3].SetActive(true);
-        };
+		}
+		else if(strength > 4 && strength <= 5)
+		{
+            skins[4].SetActive(true);
+        }
+        else if (strength > 5 && strength <= 6)
+        {
+            skins[5].SetActive(true);
+        } else if(strength > 6)
+		{
+            skins[6].SetActive(true);
+		}
+
 
         strengthMax = strength;
         gPull = GetComponent<GravitationnalPull>();

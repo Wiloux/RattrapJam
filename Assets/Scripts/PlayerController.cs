@@ -7,6 +7,7 @@ using Cinemachine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5;
+    [SerializeField] private Vector2 moveSpeedMaxMin;
     [SerializeField] private float growSpeed = .5f;
     public float strength;
     private float size = 0;
@@ -27,9 +28,9 @@ public class PlayerController : MonoBehaviour
     public Camera miniMapCam;
     private float lastThreshold;
     [SerializeField] private float targetFov;
-    [SerializeField] private float perfectFovRatio;
-    [SerializeField] private float fovUpValue;
     [SerializeField] private float cameraDezoomTime;
+    [SerializeField] private Vector2 cameraFovMaxMin;
+
     private float timeElapsed = 0;
 
     public GameObject eye;
@@ -43,11 +44,10 @@ public class PlayerController : MonoBehaviour
 
         t = ((strength - 1) / (strengthMax));
         targetScale = Vector3.Lerp(minSize, maxSize, t);
-        targetFov = myCam.m_Lens.OrthographicSize;
-        perfectFovRatio = myCam.m_Lens.OrthographicSize / transform.lossyScale.magnitude;
+        targetFov = Mathf.Lerp(cameraFovMaxMin.x, cameraFovMaxMin.y, t);
         miniMapCam.orthographicSize = targetFov*2;
         //targetScale = initialScale;
-        lastThreshold = transform.lossyScale.magnitude;
+        lastThreshold = 1.5f;
     }
 
     float lerpScale;
@@ -99,34 +99,39 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
+        moveSpeed = Mathf.Lerp(moveSpeedMaxMin.x, moveSpeedMaxMin.y, t);
         if (!isDead)
-            rb.velocity = new Vector3(moveDirection.x, moveDirection.y, 0).normalized *(moveSpeed * transform.localScale.magnitude);
+            rb.velocity = new Vector3(moveDirection.x, moveDirection.y, 0).normalized *moveSpeed;
     }
 
     public float t;
-
+    public float maxDiff;
     public void UpdateScaleAndStrength(Enemy killedEnemy = null, Debris debris = null)
     {
         if (debris != null)
         {
-            strength += debris.strength * 0.1f;
+          //  if(Mathf.Abs(strength - debris.strength) < maxDiff)
+            strength += debris.strength * 0.05f;
+
             t = ((strength - 1) / (strengthMax));
         }
         else if (killedEnemy != null)
         {
-            strength += killedEnemy.strengthMax * 0.1f;
-            t = ((strength - 1) / (strengthMax));
+            //if(Mathf.Abs(strength - killedEnemy.strengthMax) < maxDiff)
+            //strength += killedEnemy.strengthMax * 0.05f;
+            //t = ((strength - 1) / (strengthMax));
             killedEnemy.dead = true;
         }
 
 
-        if (myCam.m_Lens.OrthographicSize / transform.lossyScale.magnitude <= perfectFovRatio / 2)
+        if (strength >= lastThreshold)
         {
             timeElapsed = 0;
             Debug.Log("Dezoom camera");
 
-            targetFov +=  5;
-            lastThreshold += lastThreshold;
+            targetFov = Mathf.Lerp(cameraFovMaxMin.x, cameraFovMaxMin.y, t);
+
+            lastThreshold += 1;
         }
         targetScale = Vector3.Lerp(minSize, maxSize, t);
     }

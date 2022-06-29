@@ -4924,11 +4924,11 @@ MonoBehaviour:
   influenceRange: 10
   intensity: 200
   playerStrengthPercentage: 0.3
-  rotationSpeed: 50
   currentMat: {fileID: 0}
   rot: {fileID: 8475706270175460655}
   planetExplosionFX: {fileID: 6122617739568816991, guid: 80323f5a6fb045c4a80c8ff91e9ebf96, type: 3}
   suckParticles: {fileID: 1065497750006956853}
+  rotationSpeed: 50
   maxDistance: 150
 --- !u!54 &7979614318137856640
 Rigidbody:

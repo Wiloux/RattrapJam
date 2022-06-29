@@ -126,8 +126,9 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (transform.localScale.magnitude < other.transform.localScale.magnitude && transform.tag != "Consumable")
+        if (transform.localScale.magnitude < other.transform.localScale.magnitude && other.CompareTag("Consumable") == false)
         {
+            Debug.Log(other.gameObject.name);
             isDead = true;
             deathScreen.SetActive(true);
         }

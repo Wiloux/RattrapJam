@@ -24,8 +24,10 @@ public class PlayerController : MonoBehaviour
     public float strengthMin;
 
     public CinemachineVirtualCamera myCam;
-    private int lastThreshold;
+    public Camera miniMapCam;
+    private float lastThreshold;
     [SerializeField] private float targetFov;
+    [SerializeField] private float perfectFovRatio;
     [SerializeField] private float fovUpValue;
     [SerializeField] private float cameraDezoomTime;
     private float timeElapsed = 0;
@@ -42,8 +44,10 @@ public class PlayerController : MonoBehaviour
         t = ((strength - 1) / (strengthMax));
         targetScale = Vector3.Lerp(minSize, maxSize, t);
         targetFov = myCam.m_Lens.OrthographicSize;
+        perfectFovRatio = myCam.m_Lens.OrthographicSize / transform.lossyScale.magnitude;
+        miniMapCam.orthographicSize = targetFov*2;
         //targetScale = initialScale;
-        lastThreshold = (int)strength;
+        lastThreshold = transform.lossyScale.magnitude;
     }
 
     float lerpScale;
@@ -66,6 +70,7 @@ public class PlayerController : MonoBehaviour
             if (timeElapsed < cameraDezoomTime)
             {
                 myCam.m_Lens.OrthographicSize = Mathf.Lerp(myCam.m_Lens.OrthographicSize, targetFov, timeElapsed / cameraDezoomTime);
+                miniMapCam.orthographicSize = Mathf.Lerp(myCam.m_Lens.OrthographicSize*2, targetFov*2, timeElapsed / cameraDezoomTime);
                 timeElapsed += Time.deltaTime;
             }
         }
@@ -95,7 +100,7 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         if (!isDead)
-            rb.velocity = new Vector3(moveDirection.x, moveDirection.y, 0).normalized * moveSpeed;
+            rb.velocity = new Vector3(moveDirection.x, moveDirection.y, 0).normalized *(moveSpeed * transform.localScale.magnitude);
     }
 
     public float t;
@@ -115,21 +120,23 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if ((int)strength > lastThreshold)
+        if (myCam.m_Lens.OrthographicSize / transform.lossyScale.magnitude <= perfectFovRatio / 2)
         {
             timeElapsed = 0;
             Debug.Log("Dezoom camera");
-            targetFov += fovUpValue;
-            lastThreshold = (int)strength;
+
+            targetFov +=  5;
+            lastThreshold += lastThreshold;
         }
         targetScale = Vector3.Lerp(minSize, maxSize, t);
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (transform.localScale.magnitude < other.transform.localScale.magnitude && transform.tag != "Consumable")
-        {
-            isDead = true;
-            deathScreen.SetActive(true);
-        }
+        //if (transform.localScale.magnitude < other.transform.localScale.magnitude && other.transform.tag != "Consumable") 
+        //{
+        //    Debug.Log(transform.name);
+        //    isDead = true;
+        //    deathScreen.SetActive(true);
+        //}
     }
 }

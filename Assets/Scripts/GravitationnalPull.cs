@@ -71,13 +71,13 @@ public class GravitationnalPull : MonoBehaviour
 		distanceToPlayer = Vector3.Distance(pulledTarget.position, pullingObject.position);
 
 
-		if (distanceToPlayer > maxDistance * player.transform.lossyScale.magnitude)
+		if (distanceToPlayer > maxDistance * player.transform.localScale.magnitude)
 		{
 			Destroy(gameObject);
 			spawner.currentUnits--;
 		}
 
-		if (distanceToPlayer < influenceRange * transform.localScale.magnitude)
+		if (distanceToPlayer <= influenceRange * transform.localScale.magnitude && myEnemy.strength *0.65f < player.strength )
 		{
 			transform.RotateAround(pullingObject.position, rotationAxis, rotationSpeed * Time.deltaTime);
 			pullForce = (pullingObject.position - pulledTarget.position).normalized / distanceToPlayer * intensity;
@@ -97,10 +97,10 @@ public class GravitationnalPull : MonoBehaviour
 				if (suckParticles.isPlaying)
 					suckParticles.Stop();
 				StartCoroutine(Death());
-			}
+			} 
 
 		}
-		else if (distanceToPlayer > influenceRange + influenceRange / 2)
+		else if (distanceToPlayer > influenceRange)
 		{
 			if (suckParticles.isPlaying)
 				suckParticles.Stop();
@@ -161,6 +161,7 @@ public class GravitationnalPull : MonoBehaviour
 				Debris newenemy = Instantiate(Debris, transform.position, Quaternion.identity).GetComponent<Debris>();
 				debris.Add(newenemy);
 				newenemy.GetComponent<Rigidbody>().AddForce(Random.Range(15, 20) * explosionDir, ForceMode.Impulse);
+				Destroy(newenemy.gameObject, 10f);
 			}
 
 			float debrisStrength = myEnemy.strengthMax / debrisAmount;
@@ -192,10 +193,10 @@ public class GravitationnalPull : MonoBehaviour
 	private void OnDrawGizmosSelected()
 	{
 		if (player != null)
-			Gizmos.DrawWireSphere(transform.position, maxDistance * player.transform.lossyScale.magnitude);
+			Gizmos.DrawWireSphere(transform.position, maxDistance * player.transform.localScale.magnitude);
 
-
-		Gizmos.DrawWireSphere(transform.position, influenceRange * transform.lossyScale.magnitude);
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position, influenceRange *transform.localScale.magnitude);
 	}
 }
 

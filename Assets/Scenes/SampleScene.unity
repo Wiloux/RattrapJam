@@ -1303,6 +1303,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3873292232406586505, guid: 11e3cb620791bb142b2a88cec87aa57b, type: 3}
+      propertyPath: clearColorMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3873292232406586505, guid: 11e3cb620791bb142b2a88cec87aa57b, type: 3}
       propertyPath: backgroundColorHDR.b
       value: 0
       objectReference: {fileID: 0}
@@ -1470,6 +1474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b36aba9a02678b408f7bd5b569ecab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentUnits: 0
   size: {x: 200, y: 200}
   miniDistanceFromPlayer: 37.8
   player: {fileID: 1005952250}

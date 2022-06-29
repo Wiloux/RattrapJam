@@ -18,7 +18,7 @@ public class GravitationnalPull : MonoBehaviour
 	public float playerStrengthPercentage;
 	private Vector3 initialScale;
 	private Vector3 zAxis = new Vector3(0, 0, 1);
-
+	public int rotationSpeed;
 	public Material currentMat;
 	public GameObject rot;
 
@@ -57,9 +57,9 @@ public class GravitationnalPull : MonoBehaviour
 
 
 		distanceToPlayer = Vector3.Distance(pulledTarget.position, pullingObject.position);
-		if (distanceToPlayer < influenceRange * transform.localScale.magnitude)
+		if (distanceToPlayer < influenceRange)
 		{
-			transform.RotateAround(pullingObject.position, zAxis, 20 * Time.deltaTime);
+			transform.RotateAround(pullingObject.position, zAxis, rotationSpeed * Time.deltaTime);
 			pullForce = (pullingObject.position - pulledTarget.position).normalized / distanceToPlayer * intensity;
 			targetBody.AddForce(pullForce);
 

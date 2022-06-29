@@ -116,8 +116,9 @@ MonoBehaviour:
   pullingObject: {fileID: 0}
   player: {fileID: 0}
   influenceRange: 10
-  intensity: 15
+  intensity: 200
   playerStrengthPercentage: 0.3
+  rotationSpeed: 50
   currentMat: {fileID: 0}
   rot: {fileID: 8475706270175460655}
   planetExplosionFX: {fileID: 6122617739568816991, guid: 80323f5a6fb045c4a80c8ff91e9ebf96, type: 3}

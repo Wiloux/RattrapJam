@@ -17,6 +17,7 @@ public class GravitationnalPull : MonoBehaviour
 	private Vector3 pullForce;
 	public float playerStrengthPercentage;
 	private Vector3 initialScale;
+	private Vector3 zAxis = new Vector3(0, 0, 1);
 
 	public Material currentMat;
 	public GameObject rot;
@@ -32,12 +33,13 @@ public class GravitationnalPull : MonoBehaviour
 		myEnemy = GetComponent<Enemy>();
 		pullingObject = player.transform;
 		initialScale = transform.localScale;
-
+		influenceRange *= initialScale.magnitude;
 		if (!isDebris && rot != null)
 		{
 			currentMat = rot.GetComponentInChildren<MeshRenderer>().material;
 			currentMat.SetFloat("Health", myEnemy.strength / myEnemy.strength);
 		}
+
 	}
 
 	private float t = 0;
@@ -55,6 +57,7 @@ public class GravitationnalPull : MonoBehaviour
 		distanceToPlayer = Vector3.Distance(pulledTarget.position, pullingObject.position);
 		if (distanceToPlayer < influenceRange)
 		{
+			transform.RotateAround(pullingObject.position, zAxis, 20 * Time.deltaTime);
 			pullForce = (pullingObject.position - pulledTarget.position).normalized / distanceToPlayer * intensity;
 			targetBody.AddForce(pullForce);
 

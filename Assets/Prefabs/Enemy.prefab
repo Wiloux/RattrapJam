@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7979614318137856640}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Consumable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,9 +117,10 @@ MonoBehaviour:
   player: {fileID: 0}
   influenceRange: 10
   intensity: 15
-  playerStrengthPercentage: 0.1
+  playerStrengthPercentage: 0.3
   currentMat: {fileID: 0}
   rot: {fileID: 8475706270175460655}
+  planetExplosionFX: {fileID: 6122617739568816991, guid: 80323f5a6fb045c4a80c8ff91e9ebf96, type: 3}
 --- !u!54 &7979614318137856640
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -223,7 +224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: acba4dae84346824e9b68ab194c5b6b1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00000098463
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: acba4dae84346824e9b68ab194c5b6b1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -322,7 +323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: acba4dae84346824e9b68ab194c5b6b1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00000098463
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: acba4dae84346824e9b68ab194c5b6b1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -417,7 +418,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: acba4dae84346824e9b68ab194c5b6b1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0000007784
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: acba4dae84346824e9b68ab194c5b6b1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -512,7 +513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: acba4dae84346824e9b68ab194c5b6b1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00000098463
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: acba4dae84346824e9b68ab194c5b6b1, type: 3}
       propertyPath: m_LocalRotation.w

@@ -25,7 +25,8 @@ public class GravitationnalPull : MonoBehaviour
 
 	public ParticleSystem suckParticles;
 	private static ParticleSystem.Particle[] particles = new ParticleSystem.Particle[1000];
-
+	public float rotationSpeed = 50;
+	private Vector3 rotationAxis = new Vector3(0, 0, 1);
 	int count;
 
 	private Enemy myEnemy;
@@ -78,6 +79,7 @@ public class GravitationnalPull : MonoBehaviour
 
 		if (distanceToPlayer < influenceRange * transform.localScale.magnitude)
 		{
+			transform.RotateAround(pullingObject.position, rotationAxis, rotationSpeed * Time.deltaTime);
 			pullForce = (pullingObject.position - pulledTarget.position).normalized / distanceToPlayer * intensity;
 			targetBody.AddForce(pullForce);
 

@@ -17,14 +17,23 @@ public class GravitationnalPull : MonoBehaviour
 	private Vector3 pullForce;
 	public float playerStrengthPercentage;
 	private Vector3 initialScale;
-	private Vector3 zAxis = new Vector3(0, 0, 1);
-	public int rotationSpeed;
+
 	public Material currentMat;
 	public GameObject rot;
 
 	public GameObject planetExplosionFX;
 
+	public ParticleSystem suckParticles;
+	private static ParticleSystem.Particle[] particles = new ParticleSystem.Particle[1000];
+
+	int count;
+
 	private Enemy myEnemy;
+
+	public float maxDistance;
+
+	private Spawner spawner;
+
 
 	// Start is called before the first frame update
 	void Start()
@@ -35,13 +44,14 @@ public class GravitationnalPull : MonoBehaviour
 		myEnemy = GetComponent<Enemy>();
 		pullingObject = player.transform;
 		initialScale = transform.localScale;
-		influenceRange *= initialScale.magnitude;
+
+		spawner = FindObjectOfType<Spawner>();
+
 		if (!isDebris && rot != null)
 		{
 			currentMat = rot.GetComponentInChildren<MeshRenderer>().material;
 			currentMat.SetFloat("Health", myEnemy.strength / myEnemy.strength);
 		}
-
 	}
 
 	private float t = 0;
@@ -55,43 +65,66 @@ public class GravitationnalPull : MonoBehaviour
 			StartCoroutine(Death(true));
 		}
 
+		suckParticlesFunc();
 
 		distanceToPlayer = Vector3.Distance(pulledTarget.position, pullingObject.position);
-		if (distanceToPlayer < influenceRange)
+
+
+		if (distanceToPlayer > maxDistance * player.transform.lossyScale.magnitude)
 		{
-			transform.RotateAround(pullingObject.position, zAxis, rotationSpeed * Time.deltaTime);
+			Destroy(gameObject);
+			spawner.currentUnits--;
+		}
+
+		if (distanceToPlayer < influenceRange * transform.localScale.magnitude)
+		{
 			pullForce = (pullingObject.position - pulledTarget.position).normalized / distanceToPlayer * intensity;
 			targetBody.AddForce(pullForce);
 
 			if (!isDebris && currentMat != null)
 				currentMat.SetFloat("Health", myEnemy.strength / myEnemy.strengthMax);
 
-
 			if (transform.localScale.magnitude > player.transform.localScale.magnitude) //If Im bigger than the player
 			{
 				myEnemy.strength -= (player.strength * playerStrengthPercentage) * Time.deltaTime;
+				if (!suckParticles.isPlaying)
+					suckParticles.Play();
 			}
 			else //If I'm smaller
 			{
-				//if (transform.localScale.magnitude > 0.01f)  //If I'm bigger than nothing
-				//{
-				//	transform.localScale -= Vector3.one * (player.strength * playerStrengthPercentage) * Time.deltaTime;
-				//}
-				//else
-				//{
+				if (suckParticles.isPlaying)
+					suckParticles.Stop();
 				StartCoroutine(Death());
-				//}
 			}
 
 		}
 		else if (distanceToPlayer > influenceRange + influenceRange / 2)
 		{
+			if (suckParticles.isPlaying)
+				suckParticles.Stop();
 			//targetBody.velocity = Vector3.zero;
 		}
 	}
 
 
+	void suckParticlesFunc()
+	{
+		count = suckParticles.GetParticles(particles);
 
+		for (int i = 0; i < count; i++)
+		{
+			ParticleSystem.Particle particle = particles[i];
+
+			Vector3 v1 = suckParticles.transform.TransformPoint(particle.position);
+			Vector3 v2 = player.transform.position;
+
+			Vector3 tarPosi = (v2 - v1) * (particle.lifetime / particle.startLifetime);
+			particle.position = suckParticles.transform.InverseTransformPoint(v2 - tarPosi);
+			particles[i] = particle;
+		}
+
+		suckParticles.SetParticles(particles, count);
+	}
 	IEnumerator Death(bool spawnDebris = false)
 	{
 		myEnemy.dead = true;
@@ -122,7 +155,7 @@ public class GravitationnalPull : MonoBehaviour
 			int debrisAmount = Random.Range(2, 6);
 			for (int i = 0; i < debrisAmount; i++)
 			{
-				Vector2 explosionDir = new Vector2(Random.Range(-1, 1), Random.Range(-1,1));
+				Vector2 explosionDir = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
 				Debris newenemy = Instantiate(Debris, transform.position, Quaternion.identity).GetComponent<Debris>();
 				debris.Add(newenemy);
 				newenemy.GetComponent<Rigidbody>().AddForce(Random.Range(15, 20) * explosionDir, ForceMode.Impulse);
@@ -132,16 +165,17 @@ public class GravitationnalPull : MonoBehaviour
 
 			for (int i = 0; i < debrisAmount; i++)
 			{
-				debris[i].strength = debrisStrength;		
+				debris[i].strength = debrisStrength;
 				debris[i].transform.localScale = initscale;
 			}
 
-		GameObject exFX = Instantiate(planetExplosionFX, transform.position, Quaternion.identity);
-		exFX.transform.localScale = initscale;
-		Destroy(exFX, 2);
+			GameObject exFX = Instantiate(planetExplosionFX, transform.position, Quaternion.identity);
+			exFX.transform.localScale = initscale;
+			Destroy(exFX, 2);
 
 		}
 
+		spawner.currentUnits--;
 		Destroy(gameObject);
 	}
 
@@ -155,7 +189,11 @@ public class GravitationnalPull : MonoBehaviour
 
 	private void OnDrawGizmosSelected()
 	{
-		Gizmos.DrawWireSphere(transform.position, influenceRange * transform.localScale.magnitude);
+		if (player != null)
+			Gizmos.DrawWireSphere(transform.position, maxDistance * player.transform.lossyScale.magnitude);
+
+
+		Gizmos.DrawWireSphere(transform.position, influenceRange * transform.lossyScale.magnitude);
 	}
 }
 

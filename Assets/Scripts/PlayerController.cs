@@ -59,8 +59,8 @@ public class PlayerController : MonoBehaviour
 			lerpScale = 0;
 		}
 
-		if(myCam.m_Lens.OrthographicSize != targetFov)
-        {
+		if (myCam.m_Lens.OrthographicSize != targetFov)
+		{
 			if (timeElapsed < cameraDezoomTime)
 			{
 				myCam.m_Lens.OrthographicSize = Mathf.Lerp(myCam.m_Lens.OrthographicSize, targetFov, timeElapsed / cameraDezoomTime);
@@ -87,37 +87,40 @@ public class PlayerController : MonoBehaviour
 
 	private void Move()
 	{
-		rb.velocity = new Vector3(moveDirection.x, moveDirection.y,0).normalized * moveSpeed;
+		rb.velocity = new Vector3(moveDirection.x, moveDirection.y, 0).normalized * moveSpeed;
 	}
 
 	public float t;
 
-	public void UpdateScaleAndStrength(Enemy killedEnemy)
+	public void UpdateScaleAndStrength(Enemy killedEnemy = null, Debris debris = null)
 	{
-		strength += killedEnemy.strengthMax / 10;
-		t = ((strength - 1) / (strengthMax));
+		if (debris != null)
+		{
+			strength += debris.strength* 0.1f;
+			t = ((strength - 1) / (strengthMax));
+		}
+		else if (killedEnemy != null)
+		{
+			strength += killedEnemy.strengthMax* 0.1f;
+			t = ((strength - 1) / (strengthMax));
+			killedEnemy.dead = true;
+		}
+
+
+		if ((int)strength > lastThreshold)
+		{
+			timeElapsed = 0;
+			Debug.Log("Dezoom camera");
+			targetFov += fovUpValue;
+			lastThreshold = (int)strength;
+		}
 		targetScale = Vector3.Lerp(minSize, maxSize, t);
-		killedEnemy.dead = true;
 	}
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.CompareTag("Consumable") && transform.localScale.magnitude > other.transform.localScale.magnitude)
-		{
-			//Camera
-
-			if((int)strength > lastThreshold){
-				timeElapsed = 0;
-				Debug.Log("Dezoom camera");
-				targetFov += fovUpValue;
-				lastThreshold = (int)strength;
-            }
-
-			//targetScale = new Vector3(initialScale.x + size / 10, initialScale.y, initialScale.z + size / 10);
-			other.GetComponentInChildren<Animator>().SetTrigger("Death");
-		}
-		else if(transform.localScale.magnitude < other.transform.localScale.magnitude)
-		{
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-		}
+		//if (transform.localScale.magnitude < other.transform.localScale.magnitude && transform.tag != "Consumable")
+		//{
+		//	SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		//}
 	}
 }

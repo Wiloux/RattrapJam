@@ -237,7 +237,7 @@ MonoBehaviour:
   strengthMin: 0
   myCam: {fileID: 0}
   targetFov: 0
-  fovUpValue: 20
+  fovUpValue: 2
   cameraDezoomTime: 10
   eye: {fileID: 5566995158675154709}
   t: 0

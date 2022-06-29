@@ -21,6 +21,8 @@ public class GravitationnalPull : MonoBehaviour
 	public Material currentMat;
 	public GameObject rot;
 
+	public GameObject planetExplosionFX;
+
 	private Enemy myEnemy;
 
 	// Start is called before the first frame update
@@ -53,7 +55,7 @@ public class GravitationnalPull : MonoBehaviour
 
 
 		distanceToPlayer = Vector3.Distance(pulledTarget.position, pullingObject.position);
-		if (distanceToPlayer < influenceRange)
+		if (distanceToPlayer < influenceRange * transform.localScale.magnitude)
 		{
 			pullForce = (pullingObject.position - pulledTarget.position).normalized / distanceToPlayer * intensity;
 			targetBody.AddForce(pullForce);
@@ -91,39 +93,50 @@ public class GravitationnalPull : MonoBehaviour
 	{
 		myEnemy.dead = true;
 		Vector3 initscale = transform.lossyScale;
+		Vector3 initPosition = transform.position;
 		float elapsedTime = 0;
 		float waitTime = 0.8f;
-		if (spawnDebris)
-			waitTime /= 1.5f;
 
-		while (elapsedTime < waitTime)
-		{
-			transform.localScale = Vector3.Lerp(initscale, Vector3.zero, (elapsedTime / waitTime));
-			elapsedTime += Time.deltaTime;
-
-			// Yield here
-			yield return null;
-		}
 		if (!spawnDebris)
-			player.UpdateScaleAndStrength(myEnemy);
-		else
 		{
-			List<Enemy> debris = new List<Enemy>();
-			int debrisAmount = Random.Range(0, 5);
-			for (int i = 0; i < debrisAmount; i++)
+
+			while (elapsedTime < waitTime)
 			{
-				Enemy newenemy = Instantiate(Debris, transform.position, Quaternion.identity).GetComponent<Enemy>();
-				debris.Add(newenemy);
+				transform.localScale = Vector3.Lerp(initscale, Vector3.zero, (elapsedTime / waitTime));
+				transform.position = Vector3.Lerp(initPosition, player.transform.position, (elapsedTime / waitTime));
+				elapsedTime += Time.deltaTime;
+
+				// Yield here
+				yield return null;
 			}
 
-			float debrisStrength = myEnemy.strength / debrisAmount;
+			player.UpdateScaleAndStrength(myEnemy);
+		}
+		else
+		{
+			yield return new WaitForSeconds(1);
+			List<Debris> debris = new List<Debris>();
+			int debrisAmount = Random.Range(2, 6);
 			for (int i = 0; i < debrisAmount; i++)
 			{
-				debris[i].strength = debrisStrength;
+				Vector2 explosionDir = new Vector2(Random.Range(-1, 1), Random.Range(-1,1));
+				Debris newenemy = Instantiate(Debris, transform.position, Quaternion.identity).GetComponent<Debris>();
+				debris.Add(newenemy);
+				newenemy.GetComponent<Rigidbody>().AddForce(Random.Range(15, 20) * explosionDir, ForceMode.Impulse);
+			}
+
+			float debrisStrength = myEnemy.strengthMax / debrisAmount;
+
+			for (int i = 0; i < debrisAmount; i++)
+			{
+				debris[i].strength = debrisStrength;		
 				debris[i].transform.localScale = initscale;
 			}
 
-	
+		GameObject exFX = Instantiate(planetExplosionFX, transform.position, Quaternion.identity);
+		exFX.transform.localScale = initscale;
+		Destroy(exFX, 2);
+
 		}
 
 		Destroy(gameObject);
@@ -136,4 +149,10 @@ public class GravitationnalPull : MonoBehaviour
 			StartCoroutine(Death());
 		}
 	}
+
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.DrawWireSphere(transform.position, influenceRange * transform.localScale.magnitude);
+	}
 }
+

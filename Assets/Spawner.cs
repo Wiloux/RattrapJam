@@ -5,7 +5,8 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
 	// Start is called before the first frame update
-	public const int MAXUNIT = 500;
+	public int MAXUNIT = 500;
+	public Vector2 maxUnityMinMax; 
 	public int currentUnits;
 
 	public Vector2 size;
@@ -16,6 +17,8 @@ public class Spawner : MonoBehaviour
 	public float playerStrength = 3;
 	public float strengthMax = 5;
 	public GameObject enemy;
+	public GameObject blackHole;
+
 
 	public float timerDur;
 	private float timer;
@@ -36,6 +39,15 @@ public class Spawner : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		MAXUNIT = (int)Mathf.Lerp(maxUnityMinMax.x, maxUnityMinMax.y, playerScript.t);
+
+
+		if(playerScript.strength == 1.5)
+		{
+			blackHole.SetActive(true);
+		}
+
+
 		if (timer >= 0)
 		{
 			timer -= Time.deltaTime;
@@ -50,6 +62,8 @@ public class Spawner : MonoBehaviour
 
 	public void spawnUnit(float currentPlayerStrength)
 	{
+
+
 		if (MAXUNIT <= currentUnits)
 			return;
 
@@ -71,7 +85,7 @@ public class Spawner : MonoBehaviour
 		Collider[] hitColliders = Physics.OverlapSphere(final, scale.x * miniSpaceSpawn);
 		int maxAttempt = 0;
 
-		while ((hitColliders.Length != 0 || Vector3.Distance(player.transform.position, final) < (miniDistanceFromPlayer * playerScript.transform.lossyScale.magnitude)) && maxAttempt != 50)
+		while ((hitColliders.Length != 0 || Vector3.Distance(player.transform.position, final) < playerScript.miniMapCam.orthographicSize ) && maxAttempt != 50)
 		{
 			final = player.transform.position + (new Vector3(Random.Range(-size.x / 2, size.x / 2),
 			Random.Range(-size.y / 2, size.y / 2)) * playerScript.transform.localScale.magnitude);
@@ -101,7 +115,7 @@ public class Spawner : MonoBehaviour
 			Gizmos.color = Color.yellow;
 			Gizmos.DrawWireCube(player.transform.position, new Vector3(size.x, size.y) * playerScript.transform.localScale.magnitude);
 			Gizmos.color = Color.blue;
-			Gizmos.DrawWireSphere(player.transform.position, miniDistanceFromPlayer * playerScript.transform.localScale.magnitude);
+			Gizmos.DrawWireSphere(player.transform.position,  playerScript.miniMapCam.orthographicSize);
 
 
 		}

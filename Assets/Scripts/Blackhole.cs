@@ -17,6 +17,8 @@ public class Blackhole : MonoBehaviour
 	public Spawner spawner;
 	public GameObject eye;
 
+	
+
 	public LayerMask everythingbutPlayer;
 	// Start is called before the first frame update
 	void Start()
@@ -35,7 +37,7 @@ public class Blackhole : MonoBehaviour
 			playerScript.maxSize + playerScript.maxSize * 0.1f,
 			playerScript.t);
 
-		Collider[] hitColliders = Physics.OverlapSphere(transform.position, transform.lossyScale.x * attractionRange, everythingbutPlayer);
+		Collider[] hitColliders = Physics.OverlapSphere(transform.position, transform.lossyScale.x + attractionRange, everythingbutPlayer);
 
 
 		if (hitColliders.Length != 0)
@@ -47,6 +49,15 @@ public class Blackhole : MonoBehaviour
 			{
 				if (hitColliders[i].transform.lossyScale.x > transform.lossyScale.x)
 					break;
+
+				if (hitColliders[i].gameObject.GetComponent<GravitationnalPull>() != null)
+				{
+					
+					if (hitColliders[i].gameObject.GetComponent<GravitationnalPull>().myEnemy.isDead)
+					{		
+						break;
+					}
+				}
 
 				if (Vector3.Distance(transform.position, hitColliders[i].transform.position) < minDistance)
 				{
@@ -76,58 +87,65 @@ public class Blackhole : MonoBehaviour
 		if (this.transform.localScale.magnitude < targetScale.magnitude)
 		{
 			this.transform.localScale = Vector3.Lerp(transform.localScale, targetScale, lerpTime * Time.deltaTime);
-			attractionRange = this.transform.localScale.x / 2 * 17;
+			//attractionRange = this.transform.localScale.x / 2 * 17;
 		}
-		if (chasedTransform != null)
+		if (chasedTransform.gameObject != null)
 		{
 			transform.position = Vector3.MoveTowards(transform.position, chasedTransform.position, speed * Time.deltaTime);
-		}
-		else
-		{
-			chasedTransform = playerTransform;
-		}
-		if (Vector3.Distance(chasedTransform.position, this.transform.position) < destroyDistance)
-		{
-			//if (chasedTransform.gameObject.CompareTag("Consumable") == false)
+
+			//else
 			//{
-			//	targetScale += chasedTransform.localScale / growDivider;
+			//	chasedTransform = playerTransform;
 			//}
-			if (chasedTransform != playerTransform)
-			{
-				spawner.currentUnits--;
-				Destroy(chasedTransform.gameObject);
 
-			}
-			else
+			if (Vector3.Distance(chasedTransform.position, this.transform.position) < destroyDistance)
 			{
-				if(playerTransform.gameObject.GetComponent<PlayerController>().rampaging == false)
-                {
-				playerTransform.gameObject.GetComponent<PlayerController>().Death();
-                }
-                else
-                {
-					EndGame();
-                }
+				//if (chasedTransform.gameObject.CompareTag("Consumable") == false)
+				//{
+				//	targetScale += chasedTransform.localScale / growDivider;
+				//}
+				if (chasedTransform != playerTransform)
+				{
+
+					if (chasedTransform != null&& chasedTransform.gameObject.GetComponent<GravitationnalPull>() != null)
+					{
+						StartCoroutine(chasedTransform.gameObject.GetComponent<GravitationnalPull>().Death(false, transform));
+
+						chasedTransform = null;
+					}
+				}
+				else
+				{
+					if (playerTransform.gameObject.GetComponent<PlayerController>().rampaging == false)
+					{
+						playerTransform.gameObject.GetComponent<PlayerController>().Death();
+					}
+					else
+					{
+						EndGame();
+					}
+				}
 			}
+
+			if(chasedTransform != null)
+			eye.transform.localEulerAngles = new Vector4(0, (transform.position.y - chasedTransform.position.y), (transform.position.x - chasedTransform.position.x), (transform.position.y - chasedTransform.position.y)).normalized * 30;
+
 		}
-
-
-		eye.transform.localEulerAngles = new Vector4(0, (transform.position.y - chasedTransform.position.y), (transform.position.x - chasedTransform.position.x), (transform.position.y - chasedTransform.position.y)).normalized * 30;
-
-
 
 
 	}
 
 	void EndGame()
-    {
+	{
 		gameObject.SetActive(false);
-    }
+	}
 
 	private void OnDrawGizmosSelected()
 	{
 
-		Gizmos.DrawWireSphere(transform.position, transform.lossyScale.x * attractionRange);
+		Gizmos.DrawWireSphere(transform.position, transform.lossyScale.x + attractionRange);
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position, transform.lossyScale.x + destroyDistance);
 	}
 }
 //    void OnTriggerEnter(Collider other)

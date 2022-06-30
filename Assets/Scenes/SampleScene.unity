@@ -242,6 +242,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3986646706870244895, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: destroyDistance
+      value: 0.39
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
 --- !u!1 &300462017
@@ -1146,7 +1150,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'ANTIMATTER LEVEL:      1 000/ 1000'
+  m_text: 'ANTIMATTER LEVEL:      1000/ 1000'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 40f4db898a7ea3e45b473b3df8451730, type: 2}
   m_sharedMaterial: {fileID: 7461979161018951869, guid: 40f4db898a7ea3e45b473b3df8451730, type: 2}

@@ -327,7 +327,7 @@ MonoBehaviour:
   chasedTransform: {fileID: 0}
   speed: 0.4
   force: 2
-  destroyDistance: 0.2
+  destroyDistance: 1.15
   targetScale: {x: 0, y: 0, z: 0}
   lerpTime: 1
   growDivider: 5

@@ -137,11 +137,14 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        //if (transform.localScale.magnitude < other.transform.localScale.magnitude && other.transform.tag != "Consumable") 
-        //{
-        //    Debug.Log(transform.name);
-        //    isDead = true;
-        //    deathScreen.SetActive(true);
-        //}
+        if (transform.localScale.magnitude < other.transform.localScale.magnitude && other.transform.tag != "Consumable")
+        {
+            Death();           
+        }
+    }
+    public void Death()
+    {
+        isDead = true;
+        deathScreen.SetActive(true);
     }
 }

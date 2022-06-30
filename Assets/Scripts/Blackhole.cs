@@ -55,7 +55,7 @@ public class Blackhole : MonoBehaviour
             }
             else
             {
-                Debug.Log("KilledPlayer");
+                playerTransform.gameObject.GetComponent<PlayerController>().Death();
             }
         }
     }

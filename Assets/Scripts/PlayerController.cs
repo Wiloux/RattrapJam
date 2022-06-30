@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         t = ((strength - 1) / (strengthMax));
         targetScale = Vector3.Lerp(minSize, maxSize, t);
         targetFov = Mathf.Lerp(cameraFovMaxMin.x, cameraFovMaxMin.y, t);
-        miniMapCam.orthographicSize = targetFov*2;
+        miniMapCam.orthographicSize = targetFov*4;
         //targetScale = initialScale;
         lastThreshold = 1.5f;
     }
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
             if (timeElapsed < cameraDezoomTime)
             {
                 myCam.m_Lens.OrthographicSize = Mathf.Lerp(myCam.m_Lens.OrthographicSize, targetFov, timeElapsed / cameraDezoomTime);
-                miniMapCam.orthographicSize = Mathf.Lerp(myCam.m_Lens.OrthographicSize*2, targetFov*2, timeElapsed / cameraDezoomTime);
+                miniMapCam.orthographicSize = Mathf.Lerp(myCam.m_Lens.OrthographicSize*4, targetFov*4, timeElapsed / cameraDezoomTime);
                 timeElapsed += Time.deltaTime;
             }
         }

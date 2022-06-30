@@ -31,7 +31,9 @@ public class Blackhole : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-
+		targetScale = Vector3.Lerp(playerScript.minSize + playerScript.minSize * 0.1f,
+			playerScript.maxSize + playerScript.maxSize * 0.1f,
+			playerScript.t);
 
 		Collider[] hitColliders = Physics.OverlapSphere(transform.position, transform.lossyScale.x * attractionRange, everythingbutPlayer);
 
@@ -86,10 +88,10 @@ public class Blackhole : MonoBehaviour
 		}
 		if (Vector3.Distance(chasedTransform.position, this.transform.position) < destroyDistance)
 		{
-			if (chasedTransform.gameObject.CompareTag("Consumable") == false)
-			{
-				targetScale += chasedTransform.localScale / growDivider;
-			}
+			//if (chasedTransform.gameObject.CompareTag("Consumable") == false)
+			//{
+			//	targetScale += chasedTransform.localScale / growDivider;
+			//}
 			if (chasedTransform != playerTransform)
 			{
 				spawner.currentUnits--;

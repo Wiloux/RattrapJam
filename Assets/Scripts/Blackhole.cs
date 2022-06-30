@@ -100,7 +100,14 @@ public class Blackhole : MonoBehaviour
 			}
 			else
 			{
+				if(playerTransform.gameObject.GetComponent<PlayerController>().rampaging == false)
+                {
 				playerTransform.gameObject.GetComponent<PlayerController>().Death();
+                }
+                else
+                {
+					EndGame();
+                }
 			}
 		}
 
@@ -112,7 +119,10 @@ public class Blackhole : MonoBehaviour
 
 	}
 
-
+	void EndGame()
+    {
+		gameObject.SetActive(false);
+    }
 
 	private void OnDrawGizmosSelected()
 	{

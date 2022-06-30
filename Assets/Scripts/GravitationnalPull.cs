@@ -174,6 +174,7 @@ public class GravitationnalPull : MonoBehaviour
 		{
 			if (killerTransform.gameObject == player.gameObject)
 			{
+				CameraShake.Instance.ShakeCamera(5,0.1f);
 
 				//yield return new WaitForSeconds(0.3f);
 				List<Debris> debris = new List<Debris>();

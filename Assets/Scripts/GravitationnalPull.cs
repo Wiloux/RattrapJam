@@ -13,6 +13,7 @@ public class GravitationnalPull : MonoBehaviour
     private Rigidbody targetBody;
     [SerializeField] public float influenceRange;
     [SerializeField] private float intensity;
+    private float distanceToPull;
     private float distanceToPlayer;
     private Vector3 pullForce;
     public float playerStrengthPercentage;
@@ -28,17 +29,18 @@ public class GravitationnalPull : MonoBehaviour
     public float rotationSpeed = 50;
     private Vector3 rotationAxis = new Vector3(0, 0, 1);
     int count;
-
+    public Transform darkerHole;
     private Enemy myEnemy;
 
     public float maxDistance;
-
+    public float distanceToDarkerHole;
     private Spawner spawner;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        
         pulledTarget = this.transform;
         targetBody = GetComponent<Rigidbody>();
         player = FindObjectOfType<PlayerController>();
@@ -53,6 +55,7 @@ public class GravitationnalPull : MonoBehaviour
             currentMat = rot.GetComponentInChildren<MeshRenderer>().material;
             currentMat.SetFloat("Health", myEnemy.strength / myEnemy.strength);
         }
+        distanceToDarkerHole = Mathf.Infinity;
     }
 
     private float t = 0;
@@ -68,19 +71,33 @@ public class GravitationnalPull : MonoBehaviour
 
         suckParticlesFunc();
 
-        distanceToPlayer = Vector3.Distance(pulledTarget.position, pullingObject.position);
+        distanceToPlayer = Vector3.Distance(pulledTarget.position, player.transform.position);
+        if(darkerHole != null)
+        {
+            distanceToDarkerHole = Vector3.Distance(pulledTarget.position, darkerHole.position);
+            
+        }
+        if(distanceToDarkerHole < distanceToPlayer)
+        {
+            pullingObject = darkerHole;
+            distanceToPull = distanceToDarkerHole;
+        }
+        else
+        {
+            pullingObject = player.transform;
+            distanceToPull = distanceToPlayer;
+        }
 
-
-        if (distanceToPlayer > maxDistance * player.transform.lossyScale.magnitude)
+        if (distanceToPull > maxDistance * player.transform.lossyScale.magnitude)
         {
             Destroy(gameObject);
             spawner.currentUnits--;
         }
 
-        if (distanceToPlayer < influenceRange * transform.localScale.magnitude)
+        if (distanceToPull < influenceRange * transform.localScale.magnitude)
         {
             transform.RotateAround(pullingObject.position, rotationAxis, rotationSpeed * Time.deltaTime);
-            pullForce = (pullingObject.position - pulledTarget.position).normalized / distanceToPlayer * intensity;
+            pullForce = (pullingObject.position - pulledTarget.position).normalized / distanceToPull * intensity;
             targetBody.AddForce(pullForce);
 
             if (!isDebris && currentMat != null)
@@ -104,7 +121,7 @@ public class GravitationnalPull : MonoBehaviour
             }
 
         }
-        else if (distanceToPlayer > influenceRange + influenceRange / 2)
+        else if (distanceToPull > influenceRange + influenceRange / 2)
         {
             if (suckParticles.isPlaying)
                 suckParticles.Stop();
@@ -142,19 +159,32 @@ public class GravitationnalPull : MonoBehaviour
         if (!spawnDebris)
         {
 
-            while (elapsedTime < waitTime)
-            {
-                transform.localScale = Vector3.Lerp(initscale, Vector3.zero, (elapsedTime / waitTime));
-                transform.position = Vector3.Lerp(initPosition, player.transform.position, (elapsedTime / waitTime));
-                elapsedTime += Time.deltaTime;
-
-                // Yield here
-                yield return null;
-            }
             if (pullingObject == player.gameObject.transform)
             {
-                Debug.Log("Sussy");
+                while (elapsedTime < waitTime)
+                {
+                    transform.localScale = Vector3.Lerp(initscale, Vector3.zero, (elapsedTime / waitTime));
+                    transform.position = Vector3.Lerp(initPosition, player.transform.position, (elapsedTime / waitTime));
+                    elapsedTime += Time.deltaTime;
+
+                    // Yield here
+                    yield return null;
+                }
+
                 player.UpdateScaleAndStrength(myEnemy);
+            }
+            else
+            {
+                while (elapsedTime < waitTime)
+                {
+                    transform.localScale = Vector3.Lerp(initscale, Vector3.zero, (elapsedTime / waitTime));
+                    transform.position = Vector3.Lerp(initPosition, darkerHole.position, (elapsedTime / waitTime));
+                    elapsedTime += Time.deltaTime;
+
+                    // Yield here
+                    yield return null;
+                }
+                
             }
         }
         else

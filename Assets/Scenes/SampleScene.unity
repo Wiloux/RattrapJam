@@ -969,15 +969,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1598,7 +1598,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1857521639
 GameObject:

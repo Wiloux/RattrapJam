@@ -182,7 +182,7 @@ public class GravitationnalPull : MonoBehaviour
 				int debrisAmount = Random.Range(2, 6);
 				for (int i = 0; i < debrisAmount; i++)
 				{
-					Vector3 explosionDir = new Vector3((int)Random.Range(-1, 1),0, (int)Random.Range(-1, 1));
+					Vector3 explosionDir = new Vector3((int)Random.Range(-1, 1), (int)Random.Range(-1, 1),0);
 					Debris newenemy = Instantiate(Debris, transform.position, Quaternion.identity).GetComponent<Debris>();
 					debris.Add(newenemy);
 					newenemy.GetComponent<Rigidbody>().AddForce(Random.Range(7, 10) * explosionDir, ForceMode.Impulse);

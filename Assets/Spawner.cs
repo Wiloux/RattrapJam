@@ -35,6 +35,7 @@ public class Spawner : MonoBehaviour
 	{
 		timer = timerDur;
 		playerScript = player.GetComponent<PlayerController>();
+		blackHole = FindObjectOfType<Blackhole>();
 	}
 
 	// Update is called once per frame

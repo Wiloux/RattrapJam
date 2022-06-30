@@ -6,10 +6,11 @@ public class Spawner : MonoBehaviour
 {
 	// Start is called before the first frame update
 	public int MAXUNIT = 500;
-	public Vector2 maxUnityMinMax; 
+	public Vector2 maxUnitsMinMax; 
 	public int currentUnits;
 
 	public Vector2 size;
+	public Vector2 sizeMinMax; 
 	public float miniDistanceFromPlayer;
 
 	public GameObject player;
@@ -39,8 +40,8 @@ public class Spawner : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		MAXUNIT = (int)Mathf.Lerp(maxUnityMinMax.x, maxUnityMinMax.y, playerScript.t);
-
+		MAXUNIT = (int)Mathf.Lerp(maxUnitsMinMax.x, maxUnitsMinMax.y, playerScript.t);
+		size = Vector2.one * (int)Mathf.Lerp(sizeMinMax.x, sizeMinMax.y, playerScript.t);
 
 		if(playerScript.strength == 1.5)
 		{
@@ -69,7 +70,7 @@ public class Spawner : MonoBehaviour
 
 
 		Vector3 final = player.transform.position + (new Vector3(Random.Range(-size.x / 2, size.x / 2),
-			Random.Range(-size.y / 2, size.y / 2))* playerScript.transform.localScale.magnitude);
+			Random.Range(-size.y / 2, size.y / 2)));
 
 		float randomRange = Random.Range(currentPlayerStrength - 1.5f, currentPlayerStrength + 1.5f);
 
@@ -88,7 +89,7 @@ public class Spawner : MonoBehaviour
 		while ((hitColliders.Length != 0 || Vector3.Distance(player.transform.position, final) < playerScript.miniMapCam.orthographicSize ) && maxAttempt != 50)
 		{
 			final = player.transform.position + (new Vector3(Random.Range(-size.x / 2, size.x / 2),
-			Random.Range(-size.y / 2, size.y / 2)) * playerScript.transform.localScale.magnitude);
+			Random.Range(-size.y / 2, size.y / 2)));
 
 			hitColliders = Physics.OverlapSphere(final, scale.x * miniSpaceSpawn);
 			maxAttempt++;
@@ -113,7 +114,7 @@ public class Spawner : MonoBehaviour
 		{
 
 			Gizmos.color = Color.yellow;
-			Gizmos.DrawWireCube(player.transform.position, new Vector3(size.x, size.y) * playerScript.transform.localScale.magnitude);
+			Gizmos.DrawWireCube(player.transform.position, new Vector3(size.x, size.y));
 			Gizmos.color = Color.blue;
 			Gizmos.DrawWireSphere(player.transform.position,  playerScript.miniMapCam.orthographicSize);
 

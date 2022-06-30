@@ -242,6 +242,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3986646706870244895, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: sucked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3986646706870244895, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: isAwake
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
 --- !u!1 &300462017
@@ -1498,6 +1506,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1011120779}
     - target: {fileID: 5900576998218042142, guid: 4195a9946c32e1847913d499496c5594, type: 3}
+      propertyPath: strength
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5900576998218042142, guid: 4195a9946c32e1847913d499496c5594, type: 3}
+      propertyPath: rampaging
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5900576998218042142, guid: 4195a9946c32e1847913d499496c5594, type: 3}
       propertyPath: targetFov
       value: 0
       objectReference: {fileID: 0}
@@ -1509,6 +1525,18 @@ PrefabInstance:
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 562702906}
+    - target: {fileID: 5900576998218042142, guid: 4195a9946c32e1847913d499496c5594, type: 3}
+      propertyPath: rampageRange
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5900576998218042142, guid: 4195a9946c32e1847913d499496c5594, type: 3}
+      propertyPath: rampageSuckSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5900576998218042142, guid: 4195a9946c32e1847913d499496c5594, type: 3}
+      propertyPath: rampageShrinkSpeed
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 5900576998218042143, guid: 4195a9946c32e1847913d499496c5594, type: 3}
       propertyPath: m_Constraints
       value: 120

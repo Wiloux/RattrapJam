@@ -16,7 +16,7 @@ public class Blackhole : MonoBehaviour
 	public float attractionRange;
 	public Spawner spawner;
 	public GameObject eye;
-
+	public bool sucked = false;
 
 	public bool isAwake;
 	
@@ -38,10 +38,11 @@ public class Blackhole : MonoBehaviour
 
 		if (!isAwake)
 			return;
-
+		if(sucked == false) {
 		targetScale = Vector3.Lerp(playerScript.minSize + playerScript.minSize * 0.1f,
 			playerScript.maxSize + playerScript.maxSize * 0.1f,
 			playerScript.t);
+		}
 
 		Collider[] hitColliders = Physics.OverlapSphere(transform.position, transform.lossyScale.x + attractionRange, everythingbutPlayer);
 
@@ -90,7 +91,7 @@ public class Blackhole : MonoBehaviour
 		//{
 		//    playerTransform.position = Vector3.MoveTowards(playerTransform.position, this.transform.position, 0.01f * Time.deltaTime);
 		//}
-		if (this.transform.localScale.magnitude < targetScale.magnitude)
+		if (this.transform.localScale.magnitude < targetScale.magnitude && sucked == false)
 		{
 			this.transform.localScale = Vector3.Lerp(transform.localScale, targetScale, lerpTime * Time.deltaTime);
 			//attractionRange = this.transform.localScale.x / 2 * 17;
@@ -143,7 +144,7 @@ public class Blackhole : MonoBehaviour
 
 	void EndGame()
 	{
-		gameObject.SetActive(false);
+		//gameObject.SetActive(false);
 	}
 
 	private void OnDrawGizmosSelected()

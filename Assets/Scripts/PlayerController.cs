@@ -36,11 +36,16 @@ public class PlayerController : MonoBehaviour
 	public GameObject eye;
 	private bool isDead;
 	public GameObject deathScreen;
-
+	public Transform darkerHole;
 	public TextMeshProUGUI tmpro;
-
+	public float rampageRange = 30;
+	public float rampageSuckSpeed= 10;
+	public float rampageShrinkSpeed= 10;
+	bool hasSucked = true;
 	private void Start()
 	{
+
+		darkerHole = FindObjectOfType<Blackhole>().transform;
 		rb = GetComponent<Rigidbody>();
 		initialScale = this.transform.localScale;
 
@@ -85,6 +90,13 @@ public class PlayerController : MonoBehaviour
 		{
 			transform.localScale /= 1.05f;
 		}
+		if(rampaging && Vector3.Distance(transform.position, darkerHole.position) < rampageRange && hasSucked)
+        {
+			hasSucked = false;
+			darkerHole.gameObject.GetComponent<Blackhole>().speed = 0;
+			darkerHole.position = Vector3.MoveTowards(darkerHole.position, transform.position, rampageSuckSpeed);
+			darkerHole.localScale = Vector3.Lerp(darkerHole.localScale, Vector3.zero, rampageShrinkSpeed);
+        }
 
 	}
 	void ProcessInputs()
@@ -172,5 +184,12 @@ public class PlayerController : MonoBehaviour
 		Debug.Log("Rampaging");
 		rampaging = true;
 		strength = 11;
+		darkerHole.gameObject.GetComponent<Blackhole>().sucked = true;
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position, rampageRange);
 	}
 }

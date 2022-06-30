@@ -156,7 +156,7 @@ public class GravitationnalPull : MonoBehaviour
 			while (elapsedTime < waitTime)
 			{
 				transform.localScale = Vector3.Lerp(initscale, Vector3.zero, (elapsedTime / waitTime));
-				transform.position = Vector3.Lerp(initPosition, killerTransform.transform.position, (elapsedTime / waitTime));
+				transform.position = Vector3.Lerp(killerTransform.transform.position, initPosition, (elapsedTime / waitTime));
 				elapsedTime += Time.deltaTime;
 
 				// Yield here

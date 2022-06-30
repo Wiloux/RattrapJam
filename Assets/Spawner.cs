@@ -23,6 +23,8 @@ public class Spawner : MonoBehaviour
 	public Vector3 maxSize;
 	public Vector3 minSize;
 
+	public float miniSpaceSpawn;
+
 	public float t;
 
 	void Start()
@@ -66,7 +68,7 @@ public class Spawner : MonoBehaviour
 		t = (randomRange - 1) / strengthMax;
 
 		Vector3 scale = Vector3.Lerp(minSize, maxSize, t);
-		Collider[] hitColliders = Physics.OverlapSphere(final, scale.x * 4);
+		Collider[] hitColliders = Physics.OverlapSphere(final, scale.x * miniSpaceSpawn);
 		int maxAttempt = 0;
 
 		while ((hitColliders.Length != 0 || Vector3.Distance(player.transform.position, final) < (miniDistanceFromPlayer * playerScript.transform.lossyScale.magnitude)) && maxAttempt != 50)
@@ -74,7 +76,7 @@ public class Spawner : MonoBehaviour
 			final = player.transform.position + (new Vector3(Random.Range(-size.x / 2, size.x / 2),
 			Random.Range(-size.y / 2, size.y / 2)) * playerScript.transform.localScale.magnitude);
 
-			hitColliders = Physics.OverlapSphere(final, scale.x * 4);
+			hitColliders = Physics.OverlapSphere(final, scale.x * miniSpaceSpawn);
 			maxAttempt++;
 		}
 

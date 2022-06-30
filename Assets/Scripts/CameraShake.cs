@@ -1,37 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraShake : MonoBehaviour
 {
-    bool shake = true;
-    void Start()
+    public static CameraShake Instance { get; private set; }
+    private CinemachineVirtualCamera cinemachineVirtualCamera;
+    private float shakeTimer = 0;
+    private void Awake()
     {
-        
+        Instance = this;
+
+        cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
     }
 
-    void Update()
+    public void ShakeCamera(float intensity, float time)
     {
-        if(shake == true)
+        Debug.Log("Proutomax");
+        CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin
+            = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+        cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
+        shakeTimer = time;
+    }
+
+    private void Update()
+    {
+        if(shakeTimer > 0)
         {
-            Debug.Log("Prout");
-            shake = false;
-            StartCoroutine(Shaking(20));
-        }
-    }
-    public IEnumerator Shaking(float duration)
-    {
-        Debug.Log("Shake");
-        Vector3 startPosition = transform.position;
-        float elapsedTime = 0f;
+        shakeTimer -= Time.deltaTime;
+            if (shakeTimer <= 0f)
+            {
+                
+                CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
+                    cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-        while(elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            transform.position = startPosition + Random.insideUnitSphere;
-            yield return null;
+                cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
+            }
         }
+    }   
 
-        transform.position = startPosition;
-    }
 }

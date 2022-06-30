@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2858659908892069102}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.54279, y: 0.054279, z: 0.271395}
+  m_LocalPosition: {x: 0, y: -0.000001005, z: -3.5431}
+  m_LocalScale: {x: 0.55991846, y: 0.55991846, z: 0.55991864}
   m_Children:
   - {fileID: 2858659909298440209}
   - {fileID: 2858659909205160194}
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 2497182409161259728}
   m_Layer: 0
   m_Name: DarkerHole
-  m_TagString: Consumable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -304,7 +304,7 @@ Transform:
   m_GameObject: {fileID: 2858659909688823886}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 1, z: 0.25}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 2858659908892069103}
   m_Father: {fileID: 0}
@@ -323,6 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
+  playerScript: {fileID: 0}
   chasedTransform: {fileID: 0}
   speed: 0.4
   force: 2
@@ -330,6 +331,12 @@ MonoBehaviour:
   targetScale: {x: 0, y: 0, z: 0}
   lerpTime: 1
   growDivider: 5
+  attractionRange: 8
+  spawner: {fileID: 0}
+  eye: {fileID: 2858659908913318515}
+  everythingbutPlayer:
+    serializedVersion: 2
+    m_Bits: 23
 --- !u!135 &2497182409161259728
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -341,7 +348,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 2.52
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2858659910327354091
 GameObject:

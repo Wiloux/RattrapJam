@@ -48,7 +48,6 @@ public class GravitationnalPull : MonoBehaviour
         myEnemy = GetComponent<Enemy>();
         pullingObject = player.transform;
         initialScale = transform.localScale;
-
         spawner = FindObjectOfType<Spawner>();
 
         if (!isDebris && rot != null)

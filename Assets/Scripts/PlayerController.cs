@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float growSpeed = .5f;
     public float strength;
     private float size = 0;
-
     [SerializeField] private Rigidbody rb;
 
     private Vector3 moveDirection;
@@ -32,7 +31,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 cameraFovMaxMin;
 
     private float timeElapsed = 0;
-
+    public bool rampaging;
     public GameObject eye;
     private bool isDead;
     public GameObject deathScreen;
@@ -133,6 +132,10 @@ public class PlayerController : MonoBehaviour
 
             lastThreshold += 1;
         }
+        if(strength>= strengthMax)
+        {
+            Rampage();
+        }
         targetScale = Vector3.Lerp(minSize, maxSize, t);
     }
     private void OnTriggerEnter(Collider other)
@@ -144,7 +147,16 @@ public class PlayerController : MonoBehaviour
     }
     public void Death()
     {
+        if(rampaging == false)
+        {
         isDead = true;
         deathScreen.SetActive(true);
+        }
+    }
+
+    public void Rampage()
+    {
+        Debug.Log("Rampaging");
+        rampaging = true;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Blackhole : MonoBehaviour
 {
     public Transform playerTransform;
+    public PlayerController playerScript;
     public Transform chasedTransform;
     public float speed;
     public float force = 2;
@@ -19,6 +20,7 @@ public class Blackhole : MonoBehaviour
     {
         targetScale = this.transform.localScale;
         playerTransform = FindObjectOfType<PlayerController>().transform;
+        playerScript = FindObjectOfType<PlayerController>();
         chasedTransform = playerTransform;
         attractionRange = this.transform.localScale.x / 2 * 17;
         spawner = FindObjectOfType<Spawner>();
@@ -27,18 +29,20 @@ public class Blackhole : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        speed = playerScript.moveSpeed * 0.5f;
+
         if (Vector3.Distance(playerTransform.position, this.transform.position) <= attractionRange)
         {
-            playerTransform.position = Vector3.MoveTowards(playerTransform.position, this.transform.position, 0.1f);
+            playerTransform.position = Vector3.MoveTowards(playerTransform.position, this.transform.position, 0.01f * Time.deltaTime);
         }
         if (this.transform.localScale.magnitude < targetScale.magnitude)
         {
-            this.transform.localScale = Vector3.Lerp(transform.localScale, targetScale, lerpTime);
+            this.transform.localScale = Vector3.Lerp(transform.localScale, targetScale, lerpTime * Time.deltaTime);
             attractionRange = this.transform.localScale.x / 2 * 17;
         }
         if (chasedTransform != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, chasedTransform.position, speed);
+            transform.position = Vector3.MoveTowards(transform.position, chasedTransform.position, speed*Time.deltaTime);
         }
         else
         {

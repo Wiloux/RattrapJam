@@ -123,6 +123,75 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &51400082
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2858659909688823886, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_Name
+      value: DarkerHole
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.786
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 137.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.8000007
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858659909688823887, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
 --- !u!1 &300462017
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,10 +1132,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 395491281}
     - target: {fileID: 5900576998218042142, guid: 4195a9946c32e1847913d499496c5594, type: 3}
-      propertyPath: strength
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5900576998218042142, guid: 4195a9946c32e1847913d499496c5594, type: 3}
       propertyPath: targetFov
       value: 0
       objectReference: {fileID: 0}
@@ -1078,14 +1143,6 @@ PrefabInstance:
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 562702906}
-    - target: {fileID: 5900576998218042142, guid: 4195a9946c32e1847913d499496c5594, type: 3}
-      propertyPath: cameraFovMaxMin.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5900576998218042142, guid: 4195a9946c32e1847913d499496c5594, type: 3}
-      propertyPath: cameraFovMaxMin.y
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 5900576998218042143, guid: 4195a9946c32e1847913d499496c5594, type: 3}
       propertyPath: m_Constraints
       value: 120

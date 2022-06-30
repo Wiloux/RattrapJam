@@ -6,7 +6,7 @@ using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5;
+    [SerializeField] public float moveSpeed = 5;
     [SerializeField] private Vector2 moveSpeedMaxMin;
     [SerializeField] private float growSpeed = .5f;
     public float strength;

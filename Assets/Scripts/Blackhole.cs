@@ -84,8 +84,11 @@ public class Blackhole : MonoBehaviour
 			chasedTransform = playerTransform;
 		}
 
-
+		if(playerScript.rampaging == false)
+        {
 		speed = playerScript.moveSpeed * 0.5f;
+
+        }
 
 		//if (Vector3.Distance(playerTransform.position, this.transform.position) <= attractionRange)
 		//{

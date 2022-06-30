@@ -202,10 +202,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 3986646706870244895, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
-      propertyPath: attractionRange
-      value: 8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55234316fdd930345b9eb7a223694caf, type: 3}
 --- !u!1 &300462017
@@ -1163,6 +1159,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 120
       objectReference: {fileID: 0}
+    - target: {fileID: 6146796578191967068, guid: 4195a9946c32e1847913d499496c5594, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4195a9946c32e1847913d499496c5594, type: 3}
 --- !u!1 &1313113234
@@ -1512,6 +1512,10 @@ PrefabInstance:
       propertyPath: orthographic size
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4841095063076919223, guid: 11e3cb620791bb142b2a88cec87aa57b, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 191
+      objectReference: {fileID: 0}
     - target: {fileID: 7194123131686587532, guid: 11e3cb620791bb142b2a88cec87aa57b, type: 3}
       propertyPath: m_Follow
       value: 
@@ -1685,9 +1689,10 @@ MonoBehaviour:
   playerStrength: 1
   strengthMax: 7
   enemy: {fileID: 3551570500097470654, guid: 104c9e741976f134a98fe35fd2074533, type: 3}
-  timerDur: 0.02
+  timerDur: 0.04
   maxSize: {x: 7, y: 7, z: 7}
   minSize: {x: 0.1, y: 0.1, z: 0.1}
+  miniSpaceSpawn: 4
   t: 0
 --- !u!4 &1576948036
 Transform:

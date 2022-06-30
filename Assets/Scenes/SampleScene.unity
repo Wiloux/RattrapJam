@@ -520,6 +520,120 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643317269}
   m_CullTransparentMesh: 1
+--- !u!1001 &648578016
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 963194228}
+    m_Modifications:
+    - target: {fileID: 3774940931192914132, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774940931192914132, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774940931192914132, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774940931192914132, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774940931192914132, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
+      value: 0.9882202
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774940931192914132, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 0.081077576
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774940931192914132, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774940931192914132, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: 5.1453195
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774940931192914132, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
+      value: -2.4246438
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774940931192914132, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: 5.1453195
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774940931192914132, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inWeight
+      value: 0.08685362
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774940931192914132, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
+      value: -2.4246438
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774940931192914132, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outWeight
+      value: 0.07016342
+      objectReference: {fileID: 0}
+    - target: {fileID: 3900003127333653506, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: m_Name
+      value: BgStars
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432150993262309838, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432150993262309838, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432150993262309838, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.9298441
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432150993262309838, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 190.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432150993262309838, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432150993262309838, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432150993262309838, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432150993262309838, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432150993262309838, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432150993262309838, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432150993262309838, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+--- !u!4 &648578017 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7432150993262309838, guid: 97d7c4fda7ca8bb45936c63dca0054e8, type: 3}
+  m_PrefabInstance: {fileID: 648578016}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,7 +1004,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 648578017}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: -2}
@@ -1718,6 +1833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MAXUNIT: 200
+  maxUnityMinMax: {x: 60, y: 600}
   currentUnits: 0
   size: {x: 400, y: 400}
   miniDistanceFromPlayer: 99.1
@@ -1726,6 +1842,7 @@ MonoBehaviour:
   playerStrength: 1
   strengthMax: 7
   enemy: {fileID: 3551570500097470654, guid: 104c9e741976f134a98fe35fd2074533, type: 3}
+  blackHole: {fileID: 0}
   timerDur: 0.04
   maxSize: {x: 7, y: 7, z: 7}
   minSize: {x: 0.1, y: 0.1, z: 0.1}

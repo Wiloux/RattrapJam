@@ -13,6 +13,7 @@ public class Blackhole : MonoBehaviour
     public float lerpTime = 1;
     public float growDivider = 5;
     private float attractionRange;
+    public Spawner spawner;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +21,7 @@ public class Blackhole : MonoBehaviour
         playerTransform = FindObjectOfType<PlayerController>().transform;
         chasedTransform = playerTransform;
         attractionRange = this.transform.localScale.x / 2 * 17;
+        spawner = FindObjectOfType<Spawner>();
     }
 
     // Update is called once per frame
@@ -50,6 +52,7 @@ public class Blackhole : MonoBehaviour
             }
             if (chasedTransform != playerTransform)
             {
+                spawner.currentUnits--;
                 Destroy(chasedTransform.gameObject);
 
             }

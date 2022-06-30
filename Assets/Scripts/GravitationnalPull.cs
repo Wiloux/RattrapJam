@@ -155,17 +155,33 @@ public class GravitationnalPull : MonoBehaviour
 		if (!spawnDebris)
 		{
 
-			while (elapsedTime < waitTime)
+			if (pullingObject == player.gameObject.transform)
 			{
-				transform.localScale = Vector3.Lerp(initscale, Vector3.zero, (elapsedTime / waitTime));
-				transform.position = Vector3.Lerp(initPosition, pullingObject.position, (elapsedTime / waitTime));
-				elapsedTime += Time.deltaTime;
+				while (elapsedTime < waitTime)
+				{
+					transform.localScale = Vector3.Lerp(initscale, Vector3.zero, (elapsedTime / waitTime));
+					transform.position = Vector3.Lerp(initPosition, player.transform.position, (elapsedTime / waitTime));
+					elapsedTime += Time.deltaTime;
 
-				// Yield here
-				yield return null;
+					// Yield here
+					yield return null;
+				}
+
+				player.UpdateScaleAndStrength(myEnemy);
 			}
+			else
+			{
+				while (elapsedTime < waitTime)
+				{
+					transform.localScale = Vector3.Lerp(initscale, Vector3.zero, (elapsedTime / waitTime));
+					transform.position = Vector3.Lerp(initPosition, darkerHole.position, (elapsedTime / waitTime));
+					elapsedTime += Time.deltaTime;
 
-			player.UpdateScaleAndStrength(myEnemy);
+					// Yield here
+					yield return null;
+				}
+
+			}
 		}
 		else
 		{

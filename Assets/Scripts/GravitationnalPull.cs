@@ -5,70 +5,103 @@ using UnityEngine;
 public class GravitationnalPull : MonoBehaviour
 {
 
-	public bool isDebris;
-	public GameObject Debris;
-	[SerializeField] private Transform pulledTarget;
-	[SerializeField] public Transform pullingObject;
-	[SerializeField] public PlayerController player;
-	private Rigidbody targetBody;
-	[SerializeField] public float influenceRange;
-	[SerializeField] private float intensity;
-	private float distanceToPlayer;
-	private Vector3 pullForce;
-	public float playerStrengthPercentage;
-	private Vector3 initialScale;
+    public bool isDebris;
+    public GameObject Debris;
+    [SerializeField] private Transform pulledTarget;
+    [SerializeField] public Transform pullingObject;
+    [SerializeField] public PlayerController player;
+    private Rigidbody targetBody;
+    [SerializeField] public float influenceRange;
+    [SerializeField] private float intensity;
+    private float distanceToPull;
+    private float distanceToPlayer;
+    private Vector3 pullForce;
+    public float playerStrengthPercentage;
+    private Vector3 initialScale;
 
-	public Material currentMat;
-	public GameObject rot;
+    public Material currentMat;
+    public GameObject rot;
 
-	public GameObject planetExplosionFX;
+    public GameObject planetExplosionFX;
 
-	public ParticleSystem suckParticles;
-	private static ParticleSystem.Particle[] particles = new ParticleSystem.Particle[1000];
-	public float rotationSpeed = 50;
-	private Vector3 rotationAxis = new Vector3(0, 0, 1);
-	int count;
+    public ParticleSystem suckParticles;
+    private static ParticleSystem.Particle[] particles = new ParticleSystem.Particle[1000];
+    public float rotationSpeed = 50;
+    private Vector3 rotationAxis = new Vector3(0, 0, 1);
+    int count;
+    public Transform darkerHole;
+    private Enemy myEnemy;
 
-	private Enemy myEnemy;
-
-	public float maxDistance;
-
-	private Spawner spawner;
-
-
-	// Start is called before the first frame update
-	void Start()
-	{
-		pulledTarget = this.transform;
-		targetBody = GetComponent<Rigidbody>();
-		player = FindObjectOfType<PlayerController>();
-		myEnemy = GetComponent<Enemy>();
-		pullingObject = player.transform;
-		initialScale = transform.localScale;
-
-		spawner = FindObjectOfType<Spawner>();
-
-		if (!isDebris && rot != null)
-		{
-			currentMat = rot.GetComponentInChildren<MeshRenderer>().material;
-			currentMat.SetFloat("Health", myEnemy.strength / myEnemy.strength);
-		}
-	}
-
-	private float t = 0;
-	// Update is called once per frame
-	void Update()
-	{
+    public float maxDistance;
+    public float distanceToDarkerHole;
+    private Spawner spawner;
 
 
-		if (myEnemy.strength <= 0 && !myEnemy.dead)
-		{
-			StartCoroutine(Death(true));
-		}
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+        pulledTarget = this.transform;
+        targetBody = GetComponent<Rigidbody>();
+        player = FindObjectOfType<PlayerController>();
+        myEnemy = GetComponent<Enemy>();
+        pullingObject = player.transform;
+        initialScale = transform.localScale;
 
-		suckParticlesFunc();
+        spawner = FindObjectOfType<Spawner>();
 
-		distanceToPlayer = Vector3.Distance(pulledTarget.position, pullingObject.position);
+        if (!isDebris && rot != null)
+        {
+            currentMat = rot.GetComponentInChildren<MeshRenderer>().material;
+            currentMat.SetFloat("Health", myEnemy.strength / myEnemy.strength);
+        }
+        distanceToDarkerHole = Mathf.Infinity;
+    }
+
+    private float t = 0;
+    // Update is called once per frame
+    void Update()
+    {
+
+
+        if (myEnemy.strength <= 0 && !myEnemy.dead)
+        {
+            StartCoroutine(Death(true));
+        }
+
+        suckParticlesFunc();
+
+        distanceToPlayer = Vector3.Distance(pulledTarget.position, player.transform.position);
+        if(darkerHole != null)
+        {
+            distanceToDarkerHole = Vector3.Distance(pulledTarget.position, darkerHole.position);
+            
+        }
+        if(distanceToDarkerHole < distanceToPlayer)
+        {
+            pullingObject = darkerHole;
+            distanceToPull = distanceToDarkerHole;
+        }
+        else
+        {
+            pullingObject = player.transform;
+            distanceToPull = distanceToPlayer;
+        }
+
+        if (distanceToPull > maxDistance * player.transform.lossyScale.magnitude)
+        {
+            Destroy(gameObject);
+            spawner.currentUnits--;
+        }
+
+        if (distanceToPull < influenceRange * transform.localScale.magnitude)
+        {
+            transform.RotateAround(pullingObject.position, rotationAxis, rotationSpeed * Time.deltaTime);
+            pullForce = (pullingObject.position - pulledTarget.position).normalized / distanceToPull * intensity;
+            targetBody.AddForce(pullForce);
+
+            if (!isDebris && currentMat != null)
+                currentMat.SetFloat("Health", myEnemy.strength / myEnemy.strengthMax);
 
 
 		if (distanceToPlayer > maxDistance * player.transform.localScale.magnitude)
@@ -148,6 +181,49 @@ public class GravitationnalPull : MonoBehaviour
 				yield return null;
 			}
 
+
+
+    void suckParticlesFunc()
+    {
+        count = suckParticles.GetParticles(particles);
+
+        for (int i = 0; i < count; i++)
+        {
+            ParticleSystem.Particle particle = particles[i];
+
+            Vector3 v1 = suckParticles.transform.TransformPoint(particle.position);
+            Vector3 v2 = player.transform.position;
+
+            Vector3 tarPosi = (v2 - v1) * (particle.lifetime / particle.startLifetime);
+            particle.position = suckParticles.transform.InverseTransformPoint(v2 - tarPosi);
+            particles[i] = particle;
+        }
+
+        suckParticles.SetParticles(particles, count);
+    }
+    IEnumerator Death(bool spawnDebris = false)
+    {
+        myEnemy.dead = true;
+        Vector3 initscale = transform.lossyScale;
+        Vector3 initPosition = transform.position;
+        float elapsedTime = 0;
+        float waitTime = 0.8f;
+
+        if (!spawnDebris)
+        {
+
+            if (pullingObject == player.gameObject.transform)
+            {
+                while (elapsedTime < waitTime)
+                {
+                    transform.localScale = Vector3.Lerp(initscale, Vector3.zero, (elapsedTime / waitTime));
+                    transform.position = Vector3.Lerp(initPosition, player.transform.position, (elapsedTime / waitTime));
+                    elapsedTime += Time.deltaTime;
+
+                    // Yield here
+                    yield return null;
+                }
+
 			player.UpdateScaleAndStrength(myEnemy);
 		}
 		else
@@ -189,6 +265,44 @@ public class GravitationnalPull : MonoBehaviour
 			StartCoroutine(Death());
 		}
 	}
+
+
+                    // Yield here
+                    yield return null;
+                }
+                
+            }
+        }
+        else
+        {
+            yield return new WaitForSeconds(1);
+            List<Debris> debris = new List<Debris>();
+            int debrisAmount = Random.Range(2, 6);
+            for (int i = 0; i < debrisAmount; i++)
+            {
+                Vector2 explosionDir = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
+                Debris newenemy = Instantiate(Debris, transform.position, Quaternion.identity).GetComponent<Debris>();
+                debris.Add(newenemy);
+                newenemy.GetComponent<Rigidbody>().AddForce(Random.Range(15, 20) * explosionDir, ForceMode.Impulse);
+            }
+
+            float debrisStrength = myEnemy.strengthMax / debrisAmount;
+
+            for (int i = 0; i < debrisAmount; i++)
+            {
+                debris[i].strength = debrisStrength;
+                debris[i].transform.localScale = initscale;
+            }
+
+            GameObject exFX = Instantiate(planetExplosionFX, transform.position, Quaternion.identity);
+            exFX.transform.localScale = initscale;
+            Destroy(exFX, 2);
+
+        }
+
+        spawner.currentUnits--;
+        Destroy(gameObject);
+    }
 
 	private void OnDrawGizmosSelected()
 	{

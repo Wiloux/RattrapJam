@@ -17,6 +17,8 @@ public class Blackhole : MonoBehaviour
 	public Spawner spawner;
 	public GameObject eye;
 
+
+	public bool isAwake;
 	
 
 	public LayerMask everythingbutPlayer;
@@ -33,6 +35,10 @@ public class Blackhole : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+
+		if (!isAwake)
+			return;
+
 		targetScale = Vector3.Lerp(playerScript.minSize + playerScript.minSize * 0.1f,
 			playerScript.maxSize + playerScript.maxSize * 0.1f,
 			playerScript.t);

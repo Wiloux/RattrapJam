@@ -18,7 +18,7 @@ public class Spawner : MonoBehaviour
 	public float playerStrength = 3;
 	public float strengthMax = 5;
 	public GameObject enemy;
-	public GameObject blackHole;
+	public Blackhole blackHole;
 
 
 	public float timerDur;
@@ -43,9 +43,10 @@ public class Spawner : MonoBehaviour
 		MAXUNIT = (int)Mathf.Lerp(maxUnitsMinMax.x, maxUnitsMinMax.y, playerScript.t);
 		size = Vector2.one * (int)Mathf.Lerp(sizeMinMax.x, sizeMinMax.y, playerScript.t);
 
-		if(playerScript.strength == 1.5)
+		if(playerScript.strength >= 1.5 && blackHole.isAwake != true)
 		{
-			blackHole.SetActive(true);
+			blackHole.isAwake = true;
+			SoundManager.instance.PlayClip(3);
 		}
 
 

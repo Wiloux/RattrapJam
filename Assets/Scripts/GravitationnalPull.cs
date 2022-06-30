@@ -175,16 +175,17 @@ public class GravitationnalPull : MonoBehaviour
 			if (killerTransform.gameObject == player.gameObject)
 			{
 				CameraShake.Instance.ShakeCamera(5,0.1f);
+				SoundManager.instance.PlayClip(1);
 
 				//yield return new WaitForSeconds(0.3f);
 				List<Debris> debris = new List<Debris>();
 				int debrisAmount = Random.Range(2, 6);
 				for (int i = 0; i < debrisAmount; i++)
 				{
-					Vector2 explosionDir = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
+					Vector2 explosionDir = new Vector2((int)Random.Range(-1, 1), (int)Random.Range(-1, 1));
 					Debris newenemy = Instantiate(Debris, transform.position, Quaternion.identity).GetComponent<Debris>();
 					debris.Add(newenemy);
-					newenemy.GetComponent<Rigidbody>().AddForce(Random.Range(15, 20) * explosionDir, ForceMode.Impulse);
+					newenemy.GetComponent<Rigidbody>().AddForce(Random.Range(7, 10) * explosionDir, ForceMode.Impulse);
 					Destroy(newenemy.gameObject, 10f);
 				}
 

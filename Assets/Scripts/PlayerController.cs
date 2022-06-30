@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour
 
 		if (debris != null)
 		{
+			SoundManager.instance.PlayClip(0);
 			//  if(Mathf.Abs(strength - debris.strength) < maxDiff)
 			if (!rampaging)
 			{
@@ -138,6 +139,7 @@ public class PlayerController : MonoBehaviour
 		{
 			timeElapsed = 0;
 			Debug.Log("Dezoom camera");
+			SoundManager.instance.PlayClip(2);
 
 			targetFov = Mathf.Lerp(cameraFovMaxMin.x, cameraFovMaxMin.y, t);
 
